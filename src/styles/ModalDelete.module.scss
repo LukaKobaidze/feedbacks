@@ -1,0 +1,23 @@
+.delete-modal {
+  width: 600px;
+}
+
+.element {
+  margin-top: 20px;
+  margin-bottom: 30px;
+  box-shadow: 0 2px 7px rgba(0, 0, 0, 0.1);
+  padding: 0px;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+
+  & > :first-child {
+    margin-right: 15px;
+  }
+}
+
+.btn {
+  width: 150px;
+}

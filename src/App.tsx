@@ -1,26 +1,69 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useEffect } from 'react';
+import { Routes, Route, useLocation } from 'react-router-dom';
+import { Home, FeedbackDetail, FeedbackEdit, FeedbackNew, Roadmap } from 'pages';
+import { useFeedbacks } from 'hooks';
 
-function App() {
+export default function App() {
+  const { pathname } = useLocation();
+  const {
+    feedbacks,
+    upvoted,
+    sortBy,
+    onFeedbackUpvote,
+    onFeedbackDelete,
+    onComment,
+    onReply,
+    onCommentEdit,
+    onCommentDelete,
+  } = useFeedbacks();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Routes>
+      <Route
+        path="/"
+        element={
+          <Home
+            feedbacksData={feedbacks}
+            sortBy={sortBy}
+            upvoted={upvoted}
+            onFeedbackUpvote={onFeedbackUpvote}
+          />
+        }
+      />
+
+      <Route path="/roadmap" element={<Roadmap data={feedbacks} />} />
+
+      <Route path="/new" element={<FeedbackNew />} />
+      <Route
+        path="/:feedbackId/edit"
+        element={
+          <FeedbackEdit
+            data={feedbacks}
+            upvoted={upvoted}
+            onDelete={onFeedbackDelete}
+            onSaveChanges={() => {}}
+          />
+        }
+      />
+
+      <Route
+        path="/:feedbackId"
+        element={
+          <FeedbackDetail
+            data={feedbacks}
+            upvoted={upvoted}
+            onUpvote={onFeedbackUpvote}
+            onComment={onComment}
+            onReply={onReply}
+            onCommentEdit={onCommentEdit}
+            onCommentDelete={onCommentDelete}
+          />
+        }
+      />
+    </Routes>
   );
 }
-
-export default App;

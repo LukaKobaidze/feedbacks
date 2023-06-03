@@ -1,0 +1,21 @@
+.container {
+  max-width: 540px;
+  margin: 0 auto;
+}
+
+.header {
+  margin-top: 76px;
+}
+
+.main {
+  position: relative;
+  margin-top: 68px;
+  padding: 52px 42px 40px 42px;
+}
+
+.edit-icon {
+  position: absolute;
+  top: 0;
+  left: 42px;
+  transform: translateY(-50%) scale(1.4);
+}

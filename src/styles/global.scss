@@ -1,0 +1,56 @@
+@import url('https://fonts.googleapis.com/css2?family=Jost:wght@400;600;700&display=swap');
+
+:root {
+  --clr-1: #ad1fea;
+  --clr-1--lighter: #c75af6;
+  --clr-2: #4661e6;
+  --clr-2--lighter: #7c91f9;
+  --clr-3: #373f68;
+  --clr-4: #ffffff;
+  --clr-5: #f2f4ff;
+  --clr-6: #f7f8fd;
+  --clr-7: #3a4374;
+  --clr-7--lighter: #656ea3;
+  --clr-8: #647196;
+  --clr-9: #f49f85;
+  --clr-10: #62bcfa;
+  --clr-11: #d73737;
+  --clr-btn-4-hover: #e98888;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  overflow-y: scroll;
+
+  @supports (scrollbar-gutter: stable) {
+    scrollbar-gutter: stable;
+    overflow-y: auto;
+  }
+}
+
+body {
+  font-family: 'Jost', sans-serif;
+  color: var(--clr-7);
+  background-color: var(--clr-6);
+}
+
+img,
+svg {
+  display: block;
+}
+
+.bold {
+  font-weight: 700;
+}
+
+.element-rounded {
+  background-color: var(--clr-4);
+  border-radius: 10px;
+}

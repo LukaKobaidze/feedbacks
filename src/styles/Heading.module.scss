@@ -1,0 +1,24 @@
+.heading {
+  font-weight: 700;
+
+  &--1 {
+    font-size: 1.5em;
+    line-height: 2.1875em;
+    letter-spacing: -0.33px;
+  }
+  &--2 {
+    font-size: 1.25em;
+    line-height: 1.8125em;
+    letter-spacing: -0.25px;
+  }
+  &--3 {
+    font-size: 1.125em;
+    line-height: 1.625em;
+    letter-spacing: -0.25px;
+  }
+  &--4 {
+    font-size: 0.875em;
+    line-height: 1.25em;
+    letter-spacing: -0.2px;
+  }
+}

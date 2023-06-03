@@ -1,0 +1,66 @@
+.button {
+  background: none;
+  border: none;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--clr-4);
+  cursor: pointer;
+  border-radius: 10px;
+  padding: 0.858em 1.765em;
+
+  &:disabled {
+    cursor: default;
+  }
+
+  &--1 {
+    background-color: var(--clr-1);
+
+    &:not(:disabled):hover,
+    &:focus-visible {
+      background-color: var(--clr-1--lighter);
+    }
+  }
+
+  &--2 {
+    background-color: var(--clr-2);
+
+    &:not(:disabled):hover,
+    &:focus-visible {
+      background-color: var(--clr-2--lighter);
+    }
+  }
+
+  &--3 {
+    background-color: var(--clr-7);
+
+    &:not(:disabled):hover,
+    &:focus-visible {
+      background-color: var(--clr-7--lighter);
+    }
+  }
+
+  &--4 {
+    background-color: var(--clr-11);
+
+    &:not(:disabled):hover,
+    &:focus-visible {
+      background-color: var(--clr-btn-4-hover);
+    }
+  }
+
+  &--5 {
+    background-color: var(--clr-5);
+    color: var(--clr-2);
+
+    &:not(:disabled):hover,
+    &:focus-visible {
+      background-color: #cfd7ff;
+    }
+
+    &.active {
+      background-color: var(--clr-2) !important;
+      color: var(--clr-4);
+    }
+  }
+}
