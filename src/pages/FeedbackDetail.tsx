@@ -13,12 +13,11 @@ interface Props {
   data: FeedbacksDataType;
   upvoted: number[];
   onUpvote: (id: number) => void;
-  onComment: (feedbackId: number, content: string) => void;
-  onReply: (
+  onCommentAdd: (
     feedbackId: number,
-    commentId: number,
-    replyingTo: string,
-    content: string
+    content: string,
+    commentId?: number,
+    replyingTo?: string
   ) => void;
   onCommentEdit: (
     feedbackId: number,
@@ -34,15 +33,8 @@ interface Props {
 }
 
 export default function FeedbackDetail(props: Props) {
-  const {
-    data,
-    upvoted,
-    onUpvote,
-    onComment,
-    onReply,
-    onCommentEdit,
-    onCommentDelete,
-  } = props;
+  const { data, upvoted, onUpvote, onCommentAdd, onCommentEdit, onCommentDelete } =
+    props;
 
   const { feedbackId } = useParams();
   const feedbackData = useMemo(() => {
@@ -89,11 +81,11 @@ export default function FeedbackDetail(props: Props) {
                           user={comment.user}
                           content={comment.content}
                           onReply={(content) =>
-                            onReply(
+                            onCommentAdd(
                               feedbackData.id,
+                              content,
                               comment.id,
-                              comment.user.username,
-                              content
+                              comment.user.username
                             )
                           }
                           onDelete={
@@ -122,11 +114,11 @@ export default function FeedbackDetail(props: Props) {
                                     content={reply.content}
                                     replyingTo={reply.replyingTo}
                                     onReply={(content) =>
-                                      onReply(
+                                      onCommentAdd(
                                         feedbackData.id,
+                                        content,
                                         comment.id,
-                                        reply.user.username,
-                                        content
+                                        reply.user.username
                                       )
                                     }
                                     onDelete={
@@ -167,7 +159,7 @@ export default function FeedbackDetail(props: Props) {
                 Add Comment
               </Heading>
               <AddComment
-                onSubmit={(content) => onComment(feedbackData.id, content)}
+                onSubmit={(content) => onCommentAdd(feedbackData.id, content)}
               />
             </div>
           </div>

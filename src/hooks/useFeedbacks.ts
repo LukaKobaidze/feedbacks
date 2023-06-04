@@ -49,43 +49,42 @@ export default function useFeedbacks() {
     navigate('/');
   };
 
-  const onComment = (feedbackId: number, content: string) => {
+  const onCommentAdd = (
+    feedbackId: number,
+    content: string,
+    commentId?: number,
+    replyingTo?: string
+  ) => {
     setFeedbacks((state) => {
       return findFeedbackByIdAndReplace(feedbackId, state, (feedback) => {
+        // REPLY
+        if (commentId && replyingTo) {
+          if (!feedback.comments?.length) return feedback;
+
+          return {
+            ...feedback,
+
+            comments: feedback.comments.map((comment) => {
+              if (comment.id !== commentId) return comment;
+
+              return {
+                ...comment,
+                replies: [
+                  ...(comment.replies || []),
+                  { content, replyingTo, user: currentUserData },
+                ],
+              };
+            }),
+          };
+        }
+
+        // COMMENT
         return {
           ...feedback,
           comments: [
             ...(feedback.comments || []),
             { id: getCommentId(), content, user: currentUserData },
           ],
-        };
-      });
-    });
-  };
-
-  const onReply = (
-    feedbackId: number,
-    commentId: number,
-    replyingTo: string,
-    content: string
-  ) => {
-    setFeedbacks((state) => {
-      return findFeedbackByIdAndReplace(feedbackId, state, (feedback) => {
-        if (!feedback.comments?.length) return feedback;
-
-        return {
-          ...feedback,
-          comments: feedback.comments.map((comment) => {
-            if (comment.id !== commentId) return comment;
-
-            return {
-              ...comment,
-              replies: [
-                ...(comment.replies || []),
-                { content, replyingTo, user: currentUserData },
-              ],
-            };
-          }),
         };
       });
     });
@@ -138,6 +137,7 @@ export default function useFeedbacks() {
     commentId: number,
     replyIndex?: number
   ) => {
+    console.log('ondelete');
     setFeedbacks((state) => {
       return findFeedbackByIdAndReplace(feedbackId, state, (feedback) => {
         let updatedComments = feedback.comments || [];
@@ -194,8 +194,7 @@ export default function useFeedbacks() {
     sortBy,
     onFeedbackUpvote,
     onFeedbackDelete,
-    onComment,
-    onReply,
+    onCommentAdd,
     onCommentEdit,
     onCommentDelete,
   };

@@ -150,7 +150,7 @@ export default function Home(props: Props) {
           <div className={styles['content__header']}>
             <IconSuggestions className={styles['content__header-icon']} />
             <Heading level="2" styleLevel="3">
-              {feedbacksData.Suggestion.length} Suggestions
+              {suggestionsRender.length} Suggestions
             </Heading>
             <Dropdown
               items={arrSortBy.map((sortBy) => ({

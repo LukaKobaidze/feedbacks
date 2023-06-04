@@ -11,8 +11,7 @@ export default function App() {
     sortBy,
     onFeedbackUpvote,
     onFeedbackDelete,
-    onComment,
-    onReply,
+    onCommentAdd,
     onCommentEdit,
     onCommentDelete,
   } = useFeedbacks();
@@ -34,9 +33,7 @@ export default function App() {
           />
         }
       />
-
-      <Route path="/roadmap" element={<Roadmap data={feedbacks} />} />
-
+      <Route path="/roadmap" element={<Roadmap data={feedbacks} />} />\
       <Route path="/new" element={<FeedbackNew />} />
       <Route
         path="/:feedbackId/edit"
@@ -49,7 +46,6 @@ export default function App() {
           />
         }
       />
-
       <Route
         path="/:feedbackId"
         element={
@@ -57,8 +53,7 @@ export default function App() {
             data={feedbacks}
             upvoted={upvoted}
             onUpvote={onFeedbackUpvote}
-            onComment={onComment}
-            onReply={onReply}
+            onCommentAdd={onCommentAdd}
             onCommentEdit={onCommentEdit}
             onCommentDelete={onCommentDelete}
           />
