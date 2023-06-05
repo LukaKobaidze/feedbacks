@@ -1,17 +1,57 @@
 import { useState, useEffect } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import { currentUserData, feedbacksData as feedbacksDataInitial } from 'data';
-import { FeedbacksDataType, SortByType } from 'types';
+import { FeedbackType, FeedbacksDataType, SortByType } from 'types';
 import { findFeedbackByIdAndReplace, getCommentId, getTotalComments } from 'helpers';
 
 export default function useFeedbacks() {
-  const navigate = useNavigate();
   const [searchParams] = useSearchParams();
 
   const [feedbacks, setFeedbacks] = useState(feedbacksDataInitial);
   const [upvoted, setUpvoted] = useState<number[]>([]);
   const sortBy: SortByType = (searchParams.get('sortBy') ||
     'Most Upvotes') as SortByType;
+
+  const onFeedbackEdit = (
+    edited: Omit<FeedbackType, 'comments' | 'upvotes'>,
+    newStatus?: keyof FeedbacksDataType
+  ) => {
+    setFeedbacks((state) => {
+      let output = { ...state };
+
+      const keys = Object.keys(state) as (keyof FeedbacksDataType)[];
+
+      for (let i = 0; i < keys.length; i++) {
+        const key = keys[i];
+        const feedbacks = state[key];
+        const indexFound = feedbacks.findIndex(
+          (feedback) => feedback.id === edited.id
+        );
+
+        if (indexFound !== -1) {
+          const feedbackEdited = { ...output[key][indexFound], ...edited };
+
+          if (newStatus) {
+            output[key] = [
+              ...feedbacks.slice(0, indexFound),
+              ...feedbacks.slice(indexFound + 1),
+            ];
+
+            output[newStatus] = [...output[newStatus], feedbackEdited];
+          } else {
+            output[key] = [
+              ...feedbacks.slice(0, indexFound),
+              feedbackEdited,
+              ...feedbacks.slice(indexFound + 1),
+            ];
+          }
+          break;
+        }
+      }
+
+      return output;
+    });
+  };
 
   const onFeedbackUpvote = (id: number) => {
     setUpvoted((state) => {
@@ -45,8 +85,6 @@ export default function useFeedbacks() {
 
       return output;
     });
-
-    navigate('/');
   };
 
   const onCommentAdd = (
@@ -192,6 +230,7 @@ export default function useFeedbacks() {
     feedbacks,
     upvoted,
     sortBy,
+    onFeedbackEdit,
     onFeedbackUpvote,
     onFeedbackDelete,
     onCommentAdd,

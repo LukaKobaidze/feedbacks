@@ -1,9 +1,10 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { AlertOutsideClick } from 'components';
-import styles from 'styles/Dropdown.module.scss';
 import { IconArrowDown, IconCheck } from 'assets/shared';
+import styles from 'styles/Dropdown.module.scss';
 
 type Props = {
+  variant?: '1' | '2';
   items: Omit<React.InputHTMLAttributes<HTMLInputElement>, 'type'>[];
   selected: string;
   onSelect: (value: string) => void;
@@ -19,6 +20,7 @@ let latestWindowWidth = 0;
 
 export default function Dropdown(props: Props) {
   const {
+    variant = '1',
     items,
     selected,
     onSelect,
@@ -81,9 +83,10 @@ export default function Dropdown(props: Props) {
     // Dropdown Direction
 
     if (!mainButtonRef.current) return;
-
+    
     const windowHeight = window.innerHeight;
     if (windowHeight !== latestWindowHeight) {
+      console.log('resize');
       latestWindowHeight = windowHeight;
 
       const dropdownBottomPos =
@@ -153,11 +156,13 @@ export default function Dropdown(props: Props) {
       handleWhen={show || showDropdown}
     >
       <button
-        className={styles['main-button']}
+        ref={mainButtonRef}
+        className={`${styles['main-button']} ${styles[`main-button--${variant}`]}`}
         onClick={(e) => {
           updateShowState((state) => !state);
           onClick && onClick(e);
         }}
+        type="button"
         {...restProps}
       >
         {children}

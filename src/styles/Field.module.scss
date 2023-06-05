@@ -1,4 +1,4 @@
-.container {
+.field-wrapper {
   position: relative;
   width: 100%;
 }
@@ -13,14 +13,15 @@
   border-radius: 5px;
   outline: none;
   padding: 0.8125em 1.5em;
-  max-width: 100%;
+  width: 100%;
 
   &::placeholder {
     color: #8c92b3;
   }
 
-  &.active,
-  &:focus {
+  &--active,
+  &:focus,
+  &:focus-visible {
     border-color: var(--clr-2);
   }
 

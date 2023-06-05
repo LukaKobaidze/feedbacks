@@ -9,6 +9,7 @@ export default function App() {
     feedbacks,
     upvoted,
     sortBy,
+    onFeedbackEdit,
     onFeedbackUpvote,
     onFeedbackDelete,
     onCommentAdd,
@@ -42,7 +43,7 @@ export default function App() {
             data={feedbacks}
             upvoted={upvoted}
             onDelete={onFeedbackDelete}
-            onSaveChanges={() => {}}
+            onSaveChanges={onFeedbackEdit}
           />
         }
       />

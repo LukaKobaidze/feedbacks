@@ -40,7 +40,7 @@ export default forwardRef<Ref, Props>(function Field(props, ref) {
   const { error } = props;
 
   return (
-    <div className={styles.container}>
+    <div className={styles['field-wrapper']}>
       {renderField()}
       {error && <span className={styles['error-text']}>{error}</span>}
     </div>

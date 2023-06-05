@@ -148,10 +148,12 @@ export default function Home(props: Props) {
       <main className={styles.main}>
         <div className={styles.content}>
           <div className={styles['content__header']}>
-            <IconSuggestions className={styles['content__header-icon']} />
-            <Heading level="2" styleLevel="3">
-              {suggestionsRender.length} Suggestions
-            </Heading>
+            <div className={styles['content__header-suggestions']}>
+              <IconSuggestions className={styles['content__header-icon']} />
+              <Heading level="2" styleLevel="3">
+                {suggestionsRender.length} Suggestions
+              </Heading>
+            </div>
             <Dropdown
               items={arrSortBy.map((sortBy) => ({
                 value: sortBy,

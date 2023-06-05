@@ -17,6 +17,7 @@ export default function Button(props: Props) {
       className={`${styles.button} ${variant ? styles[`button--${variant}`] : ''} ${
         variant === '5' && active ? styles.active : ''
       } ${className}`}
+      type="button"
       {...restProps}
     >
       {children}

@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { CategoryType, FeedbackType, FeedbacksDataType } from 'types';
 import { IconEditFeedback } from 'assets/shared';
 import { categories } from 'data';
@@ -12,13 +12,17 @@ interface Props {
   data: FeedbacksDataType;
   upvoted: number[];
   onDelete: (id: number) => void;
-  onSaveChanges: (data: FeedbackType) => void;
+  onSaveChanges: (
+    edited: Omit<FeedbackType, 'comments' | 'upvotes'>,
+    newStatus?: keyof FeedbacksDataType
+  ) => void;
 }
 
 export default function FeedbackEdit(props: Props) {
   const { data, upvoted, onDelete, onSaveChanges } = props;
 
   const { feedbackId } = useParams();
+  const navigate = useNavigate();
   const feedbackData = useMemo(():
     | (FeedbackType & {
         status: keyof FeedbacksDataType;
@@ -51,6 +55,24 @@ export default function FeedbackEdit(props: Props) {
   );
   const [isDeleting, setIsDeleting] = useState(false);
 
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    if (!feedbackData) return;
+
+    e.preventDefault();
+
+    onSaveChanges(
+      {
+        id: feedbackData.id,
+        title: titleEdited,
+        category: categoryEdited,
+        description: descriptionEdited,
+      },
+      feedbackData.status !== statusEdited ? statusEdited : undefined
+    );
+
+    navigate('/' + feedbackId);
+  };
+
   return (
     <div className={styles.container}>
       <header className={styles.header}>
@@ -60,62 +82,94 @@ export default function FeedbackEdit(props: Props) {
         <IconEditFeedback className={styles['edit-icon']} />
 
         {feedbackData && (
-          <>
-            <Heading level="1">Editing '{feedbackData.title}'</Heading>
+          <form onSubmit={handleSubmit}>
+            <Heading level="1" className={styles.heading}>
+              Editing '{feedbackData.title}'
+            </Heading>
 
-            <Heading level="2" styleLevel="4">
+            <Heading level="2" styleLevel="4" className={styles['field-title']}>
               Feedback Title
             </Heading>
-            <label htmlFor="title">Add a short, descriptive headline</label>
+            <label htmlFor="title" className={styles['field-label']}>
+              Add a short, descriptive headline
+            </label>
             <Field
               type="text"
               id="title"
               value={titleEdited}
               onChange={(e) => setTitleEdited(e.target.value)}
+              className={styles.field}
             />
 
-            <Heading level="2" styleLevel="4">
+            <Heading level="2" styleLevel="4" className={styles['field-title']}>
               Category
             </Heading>
-            <label htmlFor="category">Choose a category for your feedback</label>
+            <label htmlFor="category" className={styles['field-label']}>
+              Choose a category for your feedback
+            </label>
             <Dropdown
+              variant="2"
               items={categories.map((category) => ({ value: category }))}
               selected={categoryEdited}
               onSelect={(category) => setCategoryEdited(category as CategoryType)}
               id="category"
+              classNameWrapper={styles.field}
             >
               {categoryEdited}
             </Dropdown>
 
-            <Heading level="2" styleLevel="4">
+            <Heading level="2" styleLevel="4" className={styles['field-title']}>
               Update Status
             </Heading>
-            <label htmlFor="status">Change feedback state</label>
+            <label htmlFor="status" className={styles['field-label']}>
+              Change feedback state
+            </label>
             <Dropdown
+              variant="2"
               id="status"
               items={Object.keys(data).map((status) => ({ value: status }))}
               onSelect={(status) =>
                 setStatusEdited(status as keyof FeedbacksDataType)
               }
               selected={statusEdited}
+              classNameWrapper={styles.field}
             >
               {statusEdited}
             </Dropdown>
 
-            <Heading level="2" styleLevel="4">
+            <Heading level="2" styleLevel="4" className={styles['field-title']}>
               Feedback Detail
             </Heading>
-            <label>
+            <label htmlFor="description" className={styles['field-label']}>
               Include any specific comments on what should be improved, added, etc.
             </label>
-            <Field type="textarea" />
+            <Field
+              type="textarea"
+              id="description"
+              className={styles.field}
+              value={descriptionEdited}
+              onChange={(e) => setDescriptionEdited(e.target.value)}
+            />
 
-            <div>
-              <Button variant="4" onClick={() => setIsDeleting(true)}>
+            <div className={styles.buttons}>
+              <Button
+                variant="4"
+                onClick={() => setIsDeleting(true)}
+                type="button"
+                className={styles['btn-delete']}
+              >
                 Delete
               </Button>
-              <Button variant="3">Cancel</Button>
-              <Button variant="1">Add Feedback</Button>
+              <Button
+                variant="3"
+                onClick={() => navigate('/' + feedbackId)}
+                className={styles['btn-cancel']}
+              >
+                Cancel
+              </Button>
+              <Button variant="1" type="submit">
+                Add Feedback
+              </Button>
             </div>
 
             {isDeleting && (
@@ -129,10 +183,13 @@ export default function FeedbackEdit(props: Props) {
                   />
                 }
                 onCloseModal={() => setIsDeleting(false)}
-                onDelete={() => onDelete(Number(feedbackId))}
+                onDelete={() => {
+                  onDelete(Number(feedbackId));
+                  navigate('/');
+                }}
               />
             )}
-          </>
+          </form>
         )}
       </main>
     </div>

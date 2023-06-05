@@ -1,3 +1,5 @@
+@use './Field.module.scss' as *;
+
 .container {
   position: relative;
   height: 100%;
@@ -11,12 +13,15 @@
     & .main-button__icon {
       transform: rotate(-180deg);
     }
+
+    & .main-button--2 {
+      border-color: transparent;
+    }
   }
 }
 
 .main-button {
   font-family: inherit;
-  color: var(--clr-5);
   font-size: 14px;
   font-weight: 400;
   position: relative;
@@ -24,8 +29,6 @@
   height: 100%;
   display: flex;
   align-items: center;
-  background-color: var(--clr-3);
-  border: none;
   border-radius: 10px;
   cursor: pointer;
 
@@ -33,6 +36,22 @@
     position: absolute;
     right: 16.5px;
     transition: transform 85ms;
+  }
+
+  &--1 {
+    color: var(--clr-5);
+    background-color: var(--clr-3);
+    border: none;
+  }
+
+  &--2 {
+    @extend .field;
+    @extend .field--active;
+    outline: revert !important;
+
+    .main-button__icon {
+      color: var(--clr-2);
+    }
   }
 }
 
@@ -53,8 +72,7 @@
   &.up {
     bottom: initial;
     top: -4px;
-    transform: translate(-50%, -100%);
-    box-shadow: 0px 10px 40px -7px rgba(55, 63, 104, 0.350492);
+    transform: translateY(-100%);
   }
 
   &__item {
@@ -80,7 +98,7 @@
       font-weight: 500;
       line-height: 23px;
 
-      &:hover {
+      &:hover, &:focus-visible {
         color: var(--clr-1);
       }
     }

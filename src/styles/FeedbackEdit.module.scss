@@ -11,6 +11,7 @@
   position: relative;
   margin-top: 68px;
   padding: 52px 42px 40px 42px;
+  margin-bottom: 129px;
 }
 
 .edit-icon {
@@ -18,4 +19,34 @@
   top: 0;
   left: 42px;
   transform: translateY(-50%) scale(1.4);
+}
+
+.heading {
+  margin-bottom: 75px;
+}
+
+.field-title {
+  margin-bottom: 2px;
+}
+
+.field-label {
+  display: block;
+  margin-bottom: 16px;
+}
+
+.field {
+  margin-bottom: 24px;
+}
+
+.buttons {
+  display: flex;
+  margin-top: 32px;
+}
+
+.btn-delete {
+  margin-right: auto;
+}
+
+.btn-cancel {
+  margin-right: 16px;
 }

@@ -87,11 +87,17 @@
     background-color: var(--clr-3);
     color: var(--clr-4);
     border-radius: 10px;
+    
+    &-suggestions {
+      display: flex;
+      align-items: center;
+      flex-shrink: 0;
+    }
 
     &-icon {
       margin-right: 16px;
     }
-
+    
     &-dropdown {
       margin-left: 20.5px;
       margin-right: auto;
