@@ -99,6 +99,7 @@ export default function FeedbackEdit(props: Props) {
               value={titleEdited}
               onChange={(e) => setTitleEdited(e.target.value)}
               className={styles.field}
+              autoFocus
             />
 
             <Heading level="2" styleLevel="4" className={styles['field-title']}>
@@ -168,7 +169,7 @@ export default function FeedbackEdit(props: Props) {
                 Cancel
               </Button>
               <Button variant="1" type="submit">
-                Add Feedback
+                Save Changes
               </Button>
             </div>
 
