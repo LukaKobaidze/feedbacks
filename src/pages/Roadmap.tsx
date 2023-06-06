@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { FeedbacksDataType } from 'types';
 import buttonStyles from 'styles/Button.module.scss';
 import { Feedback, GoBack, Heading, Text } from 'components';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styles from 'styles/Roadmap.module.scss';
 
 const renderStatus: {
@@ -24,11 +24,20 @@ interface Props {
 export default function Roadmap(props: Props) {
   const { data, upvoted, onFeedbackUpvote } = props;
 
-  useEffect(() => {
-    document.title = 'Roadmap | Product Feedback';
-  }, []);
+  const navigate = useNavigate();
 
   const statusKeys = Object.keys(renderStatus) as (keyof typeof renderStatus)[];
+
+  useEffect(() => {
+    if (statusKeys.every((status) => data[status].length === 0)) {
+      navigate('/');
+    }
+
+    document.title = 'Roadmap | Product Feedback';
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <div className={styles.container}>
       <header className={styles.header}>

@@ -63,6 +63,11 @@ export default function Home(props: Props) {
           categories.includes(suggestion.category)
         );
 
+  const roadmapDisabled =
+    feedbacksData.Planned.length === 0 &&
+    feedbacksData['In-Progress'].length === 0 &&
+    feedbacksData.Live.length === 0;
+
   return (
     <div className={styles.wrapper}>
       <header className={styles.header}>
@@ -108,7 +113,13 @@ export default function Home(props: Props) {
             <Heading level="3" className={styles['roadmap__heading']}>
               Roadmap
             </Heading>
-            <Link to="/roadmap" className={styles['roadmap-anchor']}>
+            <Link
+              to="/roadmap"
+              className={`${styles['roadmap-anchor']} ${
+                roadmapDisabled ? styles['roadmap-anchor--disabled'] : ''
+              }`}
+              tabIndex={roadmapDisabled ? -1 : undefined}
+            >
               View
             </Link>
           </div>
