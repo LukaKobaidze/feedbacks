@@ -83,7 +83,7 @@ export default function Dropdown(props: Props) {
     // Dropdown Direction
 
     if (!mainButtonRef.current) return;
-    
+
     const windowHeight = window.innerHeight;
     if (windowHeight !== latestWindowHeight) {
       console.log('resize');
@@ -106,6 +106,7 @@ export default function Dropdown(props: Props) {
       }
 
       if (e.key === 'ArrowDown') {
+        e.preventDefault();
         setItemFocused((state) => {
           if (state === null || state === items.length - 1) {
             return 0;
@@ -115,6 +116,7 @@ export default function Dropdown(props: Props) {
       }
 
       if (e.key === 'ArrowUp') {
+        e.preventDefault();
         setItemFocused((state) => {
           if (state === null || state === 0) {
             return items.length - 1;
