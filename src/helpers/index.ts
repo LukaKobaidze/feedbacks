@@ -13,12 +13,20 @@ export function getTotalComments(comments: CommentType[] | undefined): number {
 export function findFeedbackById(
   id: number,
   data: FeedbacksDataType
-): FeedbackType | null {
-  return (
-    [...data.Suggestion, ...data.Planned, ...data['In-Progress'], ...data.Live].find(
-      (feedback) => feedback.id === id
-    ) || null
-  );
+): (FeedbackType & { status: keyof FeedbacksDataType }) | null {
+  const keys = Object.keys(data) as (keyof FeedbacksDataType)[];
+
+  for (let i = 0; i < keys.length; i++) {
+    const key = keys[i];
+
+    const found = data[key].find((feedback) => feedback.id === id);
+
+    if (found) {
+      return { ...found, status: key };
+    }
+  }
+
+  return null;
 }
 
 export function findFeedbackByIdAndReplace(

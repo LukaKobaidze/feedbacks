@@ -9,7 +9,8 @@
     text-decoration: underline;
   }
 
-}
-.icon {
-  margin-right: 15.67px;
+  & > svg {
+    margin-right: 15.67px;
+    color: var(--clr-2);
+  }
 }

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { CategoryType } from 'types';
 import styles from 'styles/FeedbackNew.module.scss';
 import { Button, Dropdown, GoBack, Heading } from 'components';
@@ -27,6 +27,10 @@ export default function FeedbackNew(props: Props) {
     value: '',
     error: '',
   });
+
+  useEffect(() => {
+    document.title = 'Create New Feedback | Product Feedback';
+  }, []);
 
   const isValid = (): boolean => {
     const inputs: [InputType, React.Dispatch<React.SetStateAction<InputType>>][] = [
@@ -57,7 +61,7 @@ export default function FeedbackNew(props: Props) {
   return (
     <div className={styles.container}>
       <header className={styles.header}>
-        <GoBack to="/" variant="1" />
+        <GoBack to="/" />
       </header>
       <main className={`element-rounded ${styles.main}`}>
         <IconNewFeedback className={`${styles.icon} ${styles['icon-new']}`} />

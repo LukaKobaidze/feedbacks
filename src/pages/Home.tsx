@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
-import { IconSuggestions } from 'assets/suggestions';
+import { IconSuggestions, illustrationEmpty } from 'assets/suggestions';
 import { CategoryType, FeedbacksDataType, SortByType } from 'types';
 import { arrSortBy, categories as categoriesData } from 'data';
 import {
@@ -26,6 +26,10 @@ export default function Home(props: Props) {
 
   const [searchParams, setSearchParams] = useSearchParams();
   const [categories, setCategories] = useState<'All' | CategoryType[]>('All');
+
+  useEffect(() => {
+    document.title = 'Product Feedback | LukaKobaidze';
+  }, []);
 
   const handleSortBy = (newSortBy: SortByType) => {
     if (sortBy === newSortBy) return;
@@ -174,18 +178,55 @@ export default function Home(props: Props) {
               + Add Feedback
             </Link>
           </div>
-          <ul className={styles.feedbacks}>
-            {suggestionsRender.map((suggestion) => (
-              <li key={suggestion.id} className={styles['feedbacks__item']}>
-                <Feedback
-                  isUpvoted={upvoted.includes(suggestion.id)}
-                  onUpvote={onFeedbackUpvote}
-                  attachAnchor
-                  {...suggestion}
-                />
-              </li>
-            ))}
-          </ul>
+
+          {suggestionsRender.length !== 0 ? (
+            <ul className={styles.feedbacks}>
+              {suggestionsRender.map((suggestion) => (
+                <li key={suggestion.id} className={styles['feedbacks__item']}>
+                  <Feedback
+                    isUpvoted={upvoted.includes(suggestion.id)}
+                    onUpvote={onFeedbackUpvote}
+                    attachAnchor
+                    {...suggestion}
+                  />
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <div className={`element-rounded ${styles['feedbacks-empty']}`}>
+              <div className={styles['feedbacks-empty-wrapper']}>
+                <div className={styles['feedbacks-empty__illustration-wrapper']}>
+                  <img
+                    src={illustrationEmpty}
+                    alt=""
+                    className={styles['feedbacks-empty__illustration']}
+                  />
+                </div>
+
+                <Heading
+                  level="3"
+                  styleLevel="1"
+                  className={styles['feedbacks-empty__heading']}
+                >
+                  There is no feedback yet.
+                </Heading>
+                <Text
+                  tag="p"
+                  variant="1"
+                  className={styles['feedbacks-empty__paragraph']}
+                >
+                  Got a suggestion? Found a bug that needs to be squashed? We love
+                  hearing about new ideas to improve our app.
+                </Text>
+                <Link
+                  to="/new"
+                  className={`${buttonStyles.button} ${buttonStyles['button--1']} ${styles['content__header-add-feedback']}`}
+                >
+                  + Add Feedback
+                </Link>
+              </div>
+            </div>
+          )}
         </div>
       </main>
     </div>

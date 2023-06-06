@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { CategoryType, FeedbackType, FeedbacksDataType } from 'types';
 import { IconEditFeedback } from 'assets/shared';
@@ -7,6 +7,7 @@ import { Button, Dropdown, Feedback, GoBack, Heading } from 'components';
 import Field from 'components/Field';
 import ModalDelete from 'components/ModalDelete';
 import styles from 'styles/FeedbackEdit.module.scss';
+import { findFeedbackById } from 'helpers';
 
 interface Props {
   data: FeedbacksDataType;
@@ -23,24 +24,8 @@ export default function FeedbackEdit(props: Props) {
 
   const { feedbackId } = useParams();
   const navigate = useNavigate();
-  const feedbackData = useMemo(():
-    | (FeedbackType & {
-        status: keyof FeedbacksDataType;
-      })
-    | null => {
-    const keys = Object.keys(data) as (keyof FeedbacksDataType)[];
-
-    for (let i = 0; i < keys.length; i++) {
-      const key = keys[i];
-
-      const found = data[key].find((feedback) => feedback.id === Number(feedbackId));
-
-      if (found) {
-        return { ...found, status: key };
-      }
-    }
-
-    return null;
+  const feedbackData = useMemo(() => {
+    return findFeedbackById(Number(feedbackId), data);
   }, [feedbackId, data]);
 
   const [titleEdited, setTitleEdited] = useState(feedbackData?.title || '');
@@ -54,6 +39,10 @@ export default function FeedbackEdit(props: Props) {
     feedbackData?.description || ''
   );
   const [isDeleting, setIsDeleting] = useState(false);
+
+  useEffect(() => {
+    document.title = `Editing '${feedbackData?.title || ''}' | Product Feedback`;
+  }, [feedbackData?.title]);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     if (!feedbackData) return;
@@ -76,7 +65,7 @@ export default function FeedbackEdit(props: Props) {
   return (
     <div className={styles.container}>
       <header className={styles.header}>
-        <GoBack variant="1" to={'/' + feedbackId} />
+        <GoBack to={'/' + feedbackId} />
       </header>
       <main className={`element-rounded ${styles.main}`}>
         <IconEditFeedback className={styles.icon} />
@@ -186,7 +175,7 @@ export default function FeedbackEdit(props: Props) {
                 onCloseModal={() => setIsDeleting(false)}
                 onDelete={() => {
                   onDelete(Number(feedbackId));
-                  navigate('/');
+                  navigate(feedbackData.status === 'Suggestion' ? '/' : '/roadmap');
                 }}
               />
             )}

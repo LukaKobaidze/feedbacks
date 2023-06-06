@@ -86,7 +86,6 @@ export default function Dropdown(props: Props) {
 
     const windowHeight = window.innerHeight;
     if (windowHeight !== latestWindowHeight) {
-      console.log('resize');
       latestWindowHeight = windowHeight;
 
       const dropdownBottomPos =

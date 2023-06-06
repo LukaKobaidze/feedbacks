@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { FeedbacksDataType } from 'types';
 import { currentUserData } from 'data';
@@ -43,10 +43,14 @@ export default function FeedbackDetail(props: Props) {
 
   const commentsCount = getTotalComments(feedbackData?.comments);
 
+  useEffect(() => {
+    document.title = `${feedbackData?.title || 'Details'} | Product Feedback`;
+  }, [feedbackData?.title]);
+
   return (
     <div className={styles.container}>
       <header className={styles.header}>
-        <GoBack variant="1" to="/" />
+        <GoBack to={feedbackData?.status === 'Suggestion' ? '/' : '/roadmap'} />
         <Link
           to="edit"
           className={`${buttonStyles.button} ${buttonStyles['button--1']} ${styles['anchor-edit']}`}
@@ -62,6 +66,7 @@ export default function FeedbackDetail(props: Props) {
               onUpvote={onUpvote}
               tabIndex={-1}
               {...feedbackData}
+              status={feedbackData.status}
             />
 
             {commentsCount !== 0 && (

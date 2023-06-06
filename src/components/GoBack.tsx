@@ -3,9 +3,7 @@ import { Link, LinkProps } from 'react-router-dom';
 import buttonStyles from 'styles/Button.module.scss';
 import styles from 'styles/GoBack.module.scss';
 
-interface Props extends LinkProps {
-  variant: '1' | '2';
-}
+type Props = LinkProps;
 
 export default function GoBack(props: Props) {
   const { className, ...restProps } = props;

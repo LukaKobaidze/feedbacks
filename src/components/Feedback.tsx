@@ -1,4 +1,4 @@
-import { FeedbackType } from 'types';
+import { FeedbackType, FeedbacksDataType } from 'types';
 import Button from './Button';
 import { IconArrowUp, IconComments } from 'assets/shared';
 import styles from 'styles/Feedback.module.scss';
@@ -7,16 +7,20 @@ import Text from './Text';
 import { Link, LinkProps } from 'react-router-dom';
 import { getTotalComments } from 'helpers';
 
-interface Props extends FeedbackType, Omit<LinkProps, 'to' | 'id' | 'title'> {
-  isUpvoted: boolean;
-  onUpvote?: (id: number) => void;
-  attachAnchor?: boolean;
-  disableUpvote?: boolean;
-}
+type Props = FeedbackType &
+  Omit<LinkProps, 'to' | 'id' | 'title'> & {
+    isUpvoted: boolean;
+    status?: keyof FeedbacksDataType;
+    onUpvote?: (id: number) => void;
+    attachAnchor?: boolean;
+    disableUpvote?: boolean;
+  } & ({ variant?: '1' } | { variant?: '2' });
 
 export default function Feedback(props: Props) {
   const {
+    variant = '1',
     isUpvoted,
+    status,
     onUpvote,
     id,
     title,
@@ -27,6 +31,7 @@ export default function Feedback(props: Props) {
     attachAnchor,
     disableUpvote,
     className,
+    style,
     ...restProps
   } = props;
 
@@ -49,6 +54,13 @@ export default function Feedback(props: Props) {
         <span>{isUpvoted ? upvotes + 1 : upvotes}</span>
       </Button>
       <div className={styles['text-wrapper']}>
+        {status && status !== 'Suggestion' && (
+          <div className={styles.status}>
+            <Text tag="span" variant="1">
+              {status}
+            </Text>
+          </div>
+        )}
         <Heading level="3" className={styles['text-wrapper__title']}>
           {title}
         </Heading>
@@ -77,15 +89,37 @@ export default function Feedback(props: Props) {
     </>
   );
 
+  const containerStyle = {
+    '--status-color':
+      status === 'Planned'
+        ? '#F49F85'
+        : status === 'In-Progress'
+        ? '#AD1FEA'
+        : status === 'Live'
+        ? '#62BCFA'
+        : '',
+    ...style,
+  } as React.CSSProperties;
+
   return attachAnchor ? (
     <Link
       to={'/' + id}
-      className={`element-rounded ${styles.container} ${styles['container--anchor']} ${className}`}
+      className={`element-rounded ${styles.container} ${
+        styles[`container--${variant}`]
+      } ${styles['container--anchor']} ${className}`}
+      style={containerStyle}
       {...restProps}
     >
       {contentJsx}
     </Link>
   ) : (
-    <div className={`element-rounded ${styles.container}`}>{contentJsx}</div>
+    <div
+      className={`element-rounded ${styles.container} ${
+        styles[`container--${variant}`]
+      }`}
+      style={containerStyle}
+    >
+      {contentJsx}
+    </div>
   );
 }

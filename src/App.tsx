@@ -35,7 +35,17 @@ export default function App() {
           />
         }
       />
-      <Route path="/roadmap" element={<Roadmap data={feedbacks} />} />\
+      <Route
+        path="/roadmap"
+        element={
+          <Roadmap
+            data={feedbacks}
+            upvoted={upvoted}
+            onFeedbackUpvote={onFeedbackUpvote}
+          />
+        }
+      />
+      \
       <Route path="/new" element={<FeedbackNew onFeedbackAdd={onFeedbackAdd} />} />
       <Route
         path="/:feedbackId/edit"
