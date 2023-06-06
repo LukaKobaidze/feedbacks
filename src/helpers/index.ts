@@ -54,7 +54,12 @@ export function findFeedbackByIdAndReplace(
   return output;
 }
 
-let latestId = 15;
+let latestCommentId = 15;
 export function getCommentId() {
-  return ++latestId;
+  return ++latestCommentId;
+}
+
+let latestFeedbackId = 12;
+export function getFeedbackId() {
+  return ++latestFeedbackId;
 }

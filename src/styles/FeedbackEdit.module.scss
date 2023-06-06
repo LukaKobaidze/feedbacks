@@ -14,7 +14,7 @@
   margin-bottom: 129px;
 }
 
-.edit-icon {
+.icon {
   position: absolute;
   top: 0;
   left: 42px;
@@ -32,10 +32,17 @@
 .field-label {
   display: block;
   margin-bottom: 16px;
+  color: var(--clr-8);
+  font-size: 14px;
+  line-height: 20px;
 }
 
 .field {
   margin-bottom: 24px;
+}
+
+.description-textarea {
+  height: 96px;
 }
 
 .buttons {

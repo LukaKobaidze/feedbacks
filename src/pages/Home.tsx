@@ -11,6 +11,7 @@ import {
   Dropdown,
   Button,
 } from 'components';
+import buttonStyles from 'styles/Button.module.scss';
 import styles from 'styles/Home.module.scss';
 
 interface Props {
@@ -166,7 +167,12 @@ export default function Home(props: Props) {
                 Sort by : <span className="bold">{sortBy}</span>
               </Text>
             </Dropdown>
-            <Button variant="1">+ Add Feedback</Button>
+            <Link
+              to="/new"
+              className={`${buttonStyles.button} ${buttonStyles['button--1']} ${styles['content__header-add-feedback']}`}
+            >
+              + Add Feedback
+            </Link>
           </div>
           <ul className={styles.feedbacks}>
             {suggestionsRender.map((suggestion) => (

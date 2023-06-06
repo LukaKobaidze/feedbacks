@@ -79,7 +79,7 @@ export default function FeedbackEdit(props: Props) {
         <GoBack variant="1" to={'/' + feedbackId} />
       </header>
       <main className={`element-rounded ${styles.main}`}>
-        <IconEditFeedback className={styles['edit-icon']} />
+        <IconEditFeedback className={styles.icon} />
 
         {feedbackData && (
           <form onSubmit={handleSubmit}>
@@ -147,7 +147,7 @@ export default function FeedbackEdit(props: Props) {
             <Field
               type="textarea"
               id="description"
-              className={styles.field}
+              className={`${styles.field} ${styles['description-textarea']}`}
               value={descriptionEdited}
               onChange={(e) => setDescriptionEdited(e.target.value)}
             />

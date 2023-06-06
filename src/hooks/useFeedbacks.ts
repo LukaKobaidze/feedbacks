@@ -1,16 +1,42 @@
 import { useState, useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { currentUserData, feedbacksData as feedbacksDataInitial } from 'data';
-import { FeedbackType, FeedbacksDataType, SortByType } from 'types';
-import { findFeedbackByIdAndReplace, getCommentId, getTotalComments } from 'helpers';
+import { CategoryType, FeedbackType, FeedbacksDataType, SortByType } from 'types';
+import {
+  findFeedbackByIdAndReplace,
+  getCommentId,
+  getFeedbackId,
+  getTotalComments,
+} from 'helpers';
 
 export default function useFeedbacks() {
   const [searchParams] = useSearchParams();
 
+  const navigate = useNavigate();
   const [feedbacks, setFeedbacks] = useState(feedbacksDataInitial);
   const [upvoted, setUpvoted] = useState<number[]>([]);
   const sortBy: SortByType = (searchParams.get('sortBy') ||
     'Most Upvotes') as SortByType;
+
+  const onFeedbackAdd = (
+    title: string,
+    category: CategoryType,
+    description: string
+  ) => {
+    setFeedbacks((state) => {
+      const id = getFeedbackId();
+
+      navigate('/' + id);
+
+      return {
+        ...state,
+        Suggestion: [
+          ...state.Suggestion,
+          { title, category, description, id, upvotes: 0 },
+        ],
+      };
+    });
+  };
 
   const onFeedbackEdit = (
     edited: Omit<FeedbackType, 'comments' | 'upvotes'>,
@@ -230,6 +256,7 @@ export default function useFeedbacks() {
     feedbacks,
     upvoted,
     sortBy,
+    onFeedbackAdd,
     onFeedbackEdit,
     onFeedbackUpvote,
     onFeedbackDelete,

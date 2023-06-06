@@ -9,6 +9,7 @@ export default function App() {
     feedbacks,
     upvoted,
     sortBy,
+    onFeedbackAdd,
     onFeedbackEdit,
     onFeedbackUpvote,
     onFeedbackDelete,
@@ -35,7 +36,7 @@ export default function App() {
         }
       />
       <Route path="/roadmap" element={<Roadmap data={feedbacks} />} />\
-      <Route path="/new" element={<FeedbackNew />} />
+      <Route path="/new" element={<FeedbackNew onFeedbackAdd={onFeedbackAdd} />} />
       <Route
         path="/:feedbackId/edit"
         element={

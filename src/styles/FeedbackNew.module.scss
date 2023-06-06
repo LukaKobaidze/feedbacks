@@ -1,0 +1,13 @@
+@use './FeedbackEdit.module.scss' as *;
+
+.icon-new {
+  transform: translateY(-50%);
+}
+
+.heading {
+  margin-bottom: 40px;
+}
+
+.feedbacknew-buttons {
+  justify-content: flex-end;
+}
