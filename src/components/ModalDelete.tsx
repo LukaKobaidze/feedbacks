@@ -29,7 +29,7 @@ export default function ModalDelete(props: Props) {
           Cancel
         </Button>
         <Button variant="4" onClick={() => onDelete()} className={styles.btn}>
-          Delete
+          Confirm
         </Button>
       </div>
     </Modal>
