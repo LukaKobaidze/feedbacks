@@ -150,7 +150,7 @@ export default function Comment(props: Props) {
                 replyingTo ? ' reply' : ' comment'
               }?`}
               onCloseModal={() => setAction(null)}
-              onDelete={() => onDelete && onDelete}
+              onDelete={() => onDelete && onDelete()}
               elementDeleting={
                 <div className={styles['modal-delete-element']}>
                   <Comment
