@@ -1,8 +1,14 @@
 import { useState, useEffect } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
-import { IconSuggestions, illustrationEmpty } from 'assets/suggestions';
 import { CategoryType, FeedbacksDataType, SortByType } from 'types';
 import { arrSortBy, categories as categoriesData } from 'data';
+import {
+  IconSuggestions,
+  illustrationEmpty,
+  backgroundHeaderDesktop,
+  backgroundHeaderTablet,
+  backgroundHeaderMobile,
+} from 'assets/suggestions';
 import {
   Heading,
   Text,
@@ -73,9 +79,9 @@ export default function Home(props: Props) {
       <header className={styles.header}>
         <div className={styles['header__title']}>
           <ImageResponsive
-            desktop={{ path: 'assets/suggestions/desktop/background-header.png' }}
-            tablet={{ path: 'assets/suggestions/tablet/background-header.png' }}
-            mobile={{ path: 'assets/suggestions/mobile/background-header.png' }}
+            desktop={{ path: backgroundHeaderDesktop }}
+            tablet={{ path: backgroundHeaderTablet }}
+            mobile={{ path: backgroundHeaderMobile }}
             className={styles['header__title-img']}
           />
           <div className={styles['header__title-text']}>

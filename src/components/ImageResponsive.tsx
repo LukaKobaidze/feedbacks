@@ -11,18 +11,18 @@ export default function ImageResponsive(props: Props) {
     <picture>
       {mobile && (
         <source
-          srcSet={require(`../${mobile.path}`)}
+          srcSet={mobile.path}
           media={`(max-width: ${mobile.breakpoint || 375}px)`}
         />
       )}
       {tablet && (
         <source
-          srcSet={require(`../${tablet.path}`)}
+          srcSet={tablet.path}
           media={`(max-width: ${tablet.breakpoint || 768}px)`}
         />
       )}
       <img
-        src={require(`../${desktop.path}`)}
+        src={desktop.path}
         className={`${className || ''}`}
         alt={alt || ''}
         {...restProps}
