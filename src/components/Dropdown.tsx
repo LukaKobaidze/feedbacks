@@ -6,7 +6,7 @@ import styles from 'styles/Dropdown.module.scss';
 type Props = {
   variant?: '1' | '2';
   items: Omit<React.InputHTMLAttributes<HTMLInputElement>, 'type'>[];
-  selected: string;
+  selected?: string;
   onSelect: (value: string) => void;
   classNameWrapper?: string;
 } & (
@@ -170,36 +170,39 @@ export default function Dropdown(props: Props) {
         <IconArrowDown className={styles['main-button__icon']} />
       </button>
 
-      <div
-        ref={dropdownRef}
-        className={`${styles.dropdown} ${
-          dropdownDirection === 'up' ? styles.up : ''
-        } ${className}`}
-        style={dropdownStyle}
-      >
-        {items.map(({ className, onClick, value, ...restProps }, i) => (
-          <div key={String(value)} className={styles['dropdown__item']}>
-            <input
-              ref={itemFocused === i ? (node) => node?.focus() : undefined}
-              type="button"
-              className={`${styles['dropdown__item-btn']} ${className}`}
-              onClick={(e) => {
-                onSelect(String(value));
-                updateShowState(false);
-                mainButtonRef.current?.focus();
-                onClick && onClick(e);
-              }}
-              onFocus={() => setItemFocused(i)}
-              value={value}
-              disabled={!show && !showDropdown}
-              {...restProps}
-            />
-            {value === selected && (
-              <IconCheck className={styles['dropdown__item-icon']} />
-            )}
-          </div>
-        ))}
-      </div>
+      {(show || showDropdown) && (
+        <div
+          ref={dropdownRef}
+          className={`${styles.dropdown} ${
+            dropdownDirection === 'up' ? styles.up : ''
+          } ${className}`}
+          style={dropdownStyle}
+          aria-label="dropdown"
+        >
+          {items.map(({ className, onClick, value, ...restProps }, i) => (
+            <div key={String(value)} className={styles['dropdown__item']}>
+              <input
+                ref={itemFocused === i ? (node) => node?.focus() : undefined}
+                type="button"
+                className={`${styles['dropdown__item-btn']} ${className}`}
+                onClick={(e) => {
+                  onSelect(String(value));
+                  updateShowState(false);
+                  mainButtonRef.current?.focus();
+                  onClick && onClick(e);
+                }}
+                onFocus={() => setItemFocused(i)}
+                value={value}
+                disabled={!show && !showDropdown}
+                {...restProps}
+              />
+              {value === selected && (
+                <IconCheck className={styles['dropdown__item-icon']} />
+              )}
+            </div>
+          ))}
+        </div>
+      )}
     </AlertOutsideClick>
   );
 }
