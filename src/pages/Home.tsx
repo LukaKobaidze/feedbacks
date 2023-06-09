@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { CategoryType, FeedbacksDataType, SortByType } from 'types';
 import { arrSortBy, categories as categoriesData } from 'data';
@@ -31,7 +31,10 @@ export default function Home(props: Props) {
   const { feedbacksData, sortBy, upvoted, onFeedbackUpvote } = props;
 
   const [searchParams, setSearchParams] = useSearchParams();
-  const [categories, setCategories] = useState<'All' | CategoryType[]>('All');
+  const searchParamsCategories = searchParams.get('categories');
+  const categories = !searchParamsCategories
+    ? 'All'
+    : (searchParamsCategories.split(',') as CategoryType[]);
 
   useEffect(() => {
     document.title = 'Product Feedback | LukaKobaidze';
@@ -47,18 +50,22 @@ export default function Home(props: Props) {
   };
 
   const handleToggleCategory = (category: CategoryType) => {
-    setCategories((state) => {
-      if (state === 'All') return [category];
+    setSearchParams((params) => {
+      if (categories === 'All') {
+        params.set('categories', category);
+      } else {
+        const index = categories.indexOf(category);
 
-      const index = state.indexOf(category);
-
-      if (index === -1) {
-        return [...state, category];
+        if (index === -1) {
+          params.set('categories', [...categories, category].join(','));
+        } else if (categories.length > 1) {
+          params.set(
+            'categories',
+            [...categories.slice(0, index), ...categories.slice(index + 1)].join(',')
+          );
+        }
       }
-
-      return state.length === 1
-        ? state
-        : [...state.slice(0, index), ...state.slice(index + 1)];
+      return params;
     });
   };
 
@@ -98,7 +105,12 @@ export default function Home(props: Props) {
             variant="5"
             active={categories === 'All'}
             className={styles['header__categories-btn']}
-            onClick={() => setCategories('All')}
+            onClick={() =>
+              setSearchParams((params) => {
+                params.delete('categories');
+                return params;
+              })
+            }
           >
             All
           </Button>
