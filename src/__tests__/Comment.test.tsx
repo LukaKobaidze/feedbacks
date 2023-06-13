@@ -4,7 +4,7 @@ import { render, screen, fireEvent, cleanup } from '@testing-library/react';
 import { currentUserData } from 'data';
 import { Comment } from 'components';
 
-describe('Comment component', () => {
+describe('<Comment /> component', () => {
   afterAll(cleanup);
 
   const onReply = jest.fn();
@@ -27,27 +27,31 @@ describe('Comment component', () => {
     expect(screen.getByLabelText('comment')).toBeInTheDocument();
   });
 
-  it('Should call onReply function', () => {
+  it('Should call onReply function on button click', () => {
+    const replyText = 'some reply text!';
+
     fireEvent.click(screen.getByText('Reply'));
     fireEvent.change(screen.getByPlaceholderText(/^Reply to @/), {
-      target: { value: 'some reply text!' },
+      target: { value: replyText },
     });
     fireEvent.click(screen.getByText('Post Reply'));
 
-    expect(onReply).toHaveBeenCalledTimes(1);
+    expect(onReply.mock.calls[0][0]).toBe(replyText);
   });
 
-  it('Should call onEdit function', () => {
+  it('Should call onEdit function on button click', () => {
+    const commentAfterEdit = 'edited comment text!';
+
     fireEvent.click(screen.getByText('Edit'));
     fireEvent.change(screen.getByDisplayValue(initialCommentContent), {
-      target: { value: 'edited comment content!' },
+      target: { value: commentAfterEdit },
     });
     fireEvent.click(screen.getByText(/^Update/));
 
-    expect(onEdit).toHaveBeenCalledTimes(1);
+    expect(onEdit.mock.calls[0][0]).toBe(commentAfterEdit);
   });
 
-  it('Should call onDelete function', () => {
+  it('Should call onDelete function on confirm click', () => {
     fireEvent.click(screen.getByText('Delete'));
     fireEvent.click(screen.getByText('Confirm'));
 

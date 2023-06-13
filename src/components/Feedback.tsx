@@ -1,15 +1,13 @@
-import { FeedbackType, FeedbacksDataType } from 'types';
-import Button from './Button';
-import { IconArrowUp, IconComments } from 'assets/shared';
-import styles from 'styles/Feedback.module.scss';
-import Heading from './Heading';
-import Text from './Text';
 import { Link, LinkProps } from 'react-router-dom';
+import { IconArrowUp, IconComments } from 'assets/shared';
+import { FeedbackType, FeedbacksDataType } from 'types';
 import { getTotalComments } from 'helpers';
+import { Heading, Text, Button } from 'components';
+import styles from 'styles/Feedback.module.scss';
 
 type Props = FeedbackType &
   Omit<LinkProps, 'to' | 'id' | 'title'> & {
-    isUpvoted: boolean;
+    isUpvoted?: boolean;
     status?: keyof FeedbacksDataType;
     onUpvote?: (id: number) => void;
     attachAnchor?: boolean;
@@ -45,10 +43,11 @@ export default function Feedback(props: Props) {
     <>
       <Button
         variant="5"
-        active={isUpvoted}
+        active={!!isUpvoted}
         className={`${styles.upvote} ${isUpvoted ? styles.active : ''}`}
         onClick={handleUpvoteClick}
         disabled={!onUpvote}
+        aria-label="upvote"
       >
         <IconArrowUp className={styles['upvote__icon']} />
         <span>{isUpvoted ? upvotes + 1 : upvotes}</span>

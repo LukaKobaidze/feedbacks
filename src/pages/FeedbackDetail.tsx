@@ -3,15 +3,13 @@ import { Link, useParams } from 'react-router-dom';
 import { FeedbacksDataType } from 'types';
 import { currentUserData } from 'data';
 import { findFeedbackById, getTotalComments } from 'helpers';
-import { Feedback, GoBack, Heading } from 'components';
-import Comment from 'components/Comment';
-import AddComment from 'components/AddComment';
+import { Feedback, GoBack, Heading, Comment, AddComment } from 'components';
 import buttonStyles from 'styles/Button.module.scss';
 import styles from 'styles/FeedbackDetail.module.scss';
 
 interface Props {
   data: FeedbacksDataType;
-  upvoted: number[];
+  upvoted?: number[];
   onUpvote: (id: number) => void;
   onCommentAdd: (
     feedbackId: number,
@@ -33,7 +31,7 @@ interface Props {
 }
 
 export default function FeedbackDetail(props: Props) {
-  const { data, upvoted, onUpvote, onCommentAdd, onCommentEdit, onCommentDelete } =
+  const { data, upvoted = [], onUpvote, onCommentAdd, onCommentEdit, onCommentDelete } =
     props;
 
   const { feedbackId } = useParams();
@@ -50,7 +48,7 @@ export default function FeedbackDetail(props: Props) {
   return (
     <div className={styles.container}>
       <header className={styles.header}>
-        <GoBack to={feedbackData?.status === 'Suggestion' ? '/' : '/roadmap'} />
+        <GoBack />
         <Link
           to="edit"
           className={`${buttonStyles.button} ${buttonStyles['button--1']} ${styles['anchor-edit']}`}

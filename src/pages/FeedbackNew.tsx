@@ -1,24 +1,19 @@
 import { useState, useEffect } from 'react';
-import { CategoryType } from 'types';
-import styles from 'styles/FeedbackNew.module.scss';
-import { Button, Dropdown, GoBack, Heading } from 'components';
-import { IconNewFeedback } from 'assets/shared';
-import Field from 'components/Field';
-import { categories } from 'data';
 import { useNavigate } from 'react-router-dom';
+import { IconNewFeedback } from 'assets/shared';
+import { CategoryType } from 'types';
+import { categories } from 'data';
+import { Button, Dropdown, GoBack, Heading, Field } from 'components';
+import styles from 'styles/FeedbackNew.module.scss';
 
 type InputType = { value: string; error: string };
 
 interface Props {
-  onFeedbackAdd: (
-    title: string,
-    category: CategoryType,
-    description: string
-  ) => void;
+  onSubmit: (title: string, category: CategoryType, description: string) => void;
 }
 
 export default function FeedbackNew(props: Props) {
-  const { onFeedbackAdd } = props;
+  const { onSubmit } = props;
 
   const navigate = useNavigate();
   const [title, setTitle] = useState<InputType>({ value: '', error: '' });
@@ -54,14 +49,14 @@ export default function FeedbackNew(props: Props) {
     e.preventDefault();
 
     if (isValid()) {
-      onFeedbackAdd(title.value, category, description.value);
+      onSubmit(title.value, category, description.value);
     }
   };
 
   return (
     <div className={styles.container}>
       <header className={styles.header}>
-        <GoBack to="/" />
+        <GoBack />
       </header>
       <main className={`element-rounded ${styles.main}`}>
         <IconNewFeedback className={`${styles.icon} ${styles['icon-new']}`} />
@@ -84,6 +79,7 @@ export default function FeedbackNew(props: Props) {
             onChange={(e) => setTitle({ value: e.target.value, error: '' })}
             className={styles.field}
             autoFocus
+            aria-label="title field"
           />
 
           <Heading level="2" styleLevel="4" className={styles['field-title']}>
@@ -99,6 +95,7 @@ export default function FeedbackNew(props: Props) {
             onSelect={(category) => setCategory(category as CategoryType)}
             id="category"
             classNameWrapper={styles.field}
+            aria-label="category select"
           >
             {category}
           </Dropdown>
@@ -116,6 +113,7 @@ export default function FeedbackNew(props: Props) {
             value={description.value}
             error={description.error}
             onChange={(e) => setDescription({ value: e.target.value, error: '' })}
+            aria-label="description field"
           />
 
           <div className={`${styles.buttons} ${styles['feedbacknew-buttons']}`}>

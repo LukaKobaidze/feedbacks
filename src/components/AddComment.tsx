@@ -1,8 +1,6 @@
-import styles from 'styles/AddComment.module.scss';
-import Field from './Field';
-import Button from './Button';
 import { useEffect, useRef, useState } from 'react';
-import Text from './Text';
+import { Field, Button, Text } from 'components';
+import styles from 'styles/AddComment.module.scss';
 
 const MAX_CHARS = 250;
 

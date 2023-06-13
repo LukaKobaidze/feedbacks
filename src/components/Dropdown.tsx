@@ -1,6 +1,6 @@
-import React, { useEffect, useRef, useState, useCallback } from 'react';
-import { AlertOutsideClick } from 'components';
+import { useEffect, useRef, useState, useCallback } from 'react';
 import { IconArrowDown, IconCheck } from 'assets/shared';
+import { AlertOutsideClick } from 'components';
 import styles from 'styles/Dropdown.module.scss';
 
 type Props = {

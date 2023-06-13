@@ -42,7 +42,7 @@ export default function Modal(props: Props) {
     <FocusTrap
       focusTrapOptions={initialFocus === false ? { initialFocus } : undefined}
     >
-      <div className={styles['wrapper-backdrop']}>
+      <div className={styles['wrapper-backdrop']} aria-label="backdrop">
         <AlertOutsideClick
           event="mousedown"
           onOutsideClick={onCloseModal}

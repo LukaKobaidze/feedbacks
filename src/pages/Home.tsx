@@ -23,12 +23,12 @@ import styles from 'styles/Home.module.scss';
 interface Props {
   feedbacksData: FeedbacksDataType;
   sortBy: SortByType;
-  upvoted: number[];
+  upvoted?: number[];
   onFeedbackUpvote: (id: number) => void;
 }
 
 export default function Home(props: Props) {
-  const { feedbacksData, sortBy, upvoted, onFeedbackUpvote } = props;
+  const { feedbacksData, sortBy, upvoted = [], onFeedbackUpvote } = props;
 
   const [searchParams, setSearchParams] = useSearchParams();
   const searchParamsCategories = searchParams.get('categories');
@@ -83,7 +83,7 @@ export default function Home(props: Props) {
 
   return (
     <div className={styles.wrapper}>
-      <header className={styles.header}>
+      <header className={styles.header} aria-label='header'>
         <div className={styles['header__title']}>
           <ImageResponsive
             desktop={{ path: backgroundHeaderDesktop }}
@@ -100,7 +100,10 @@ export default function Home(props: Props) {
             </Text>
           </div>
         </div>
-        <div className={`element-rounded ${styles['header__categories']}`}>
+        <div
+          className={`element-rounded ${styles['header__categories']}`}
+          aria-label="categories"
+        >
           <Button
             variant="5"
             active={categories === 'All'}
@@ -126,7 +129,8 @@ export default function Home(props: Props) {
             </Button>
           ))}
         </div>
-        <div className={`element-rounded ${styles.roadmap}`}>
+
+        <div className={`element-rounded ${styles.roadmap}`} aria-label="roadmap">
           <div className={styles['roadmap__heading-wrapper']}>
             <Heading level="3" className={styles['roadmap__heading']}>
               Roadmap
@@ -137,6 +141,7 @@ export default function Home(props: Props) {
                 roadmapDisabled ? styles['roadmap-anchor--disabled'] : ''
               }`}
               tabIndex={roadmapDisabled ? -1 : undefined}
+              aria-disabled={roadmapDisabled}
             >
               View
             </Link>
@@ -179,7 +184,7 @@ export default function Home(props: Props) {
           </ul>
         </div>
       </header>
-      <main className={styles.main}>
+      <main className={styles.main} aria-label="main">
         <div className={styles.content}>
           <div className={styles['content__header']}>
             <div className={styles['content__header-suggestions']}>
@@ -188,18 +193,21 @@ export default function Home(props: Props) {
                 {suggestionsRender.length} Suggestions
               </Heading>
             </div>
-            <Dropdown
-              items={arrSortBy.map((sortBy) => ({
-                value: sortBy,
-              }))}
-              selected={sortBy}
-              onSelect={(sortBy) => handleSortBy(sortBy as SortByType)}
-              classNameWrapper={styles['content__header-dropdown']}
-            >
-              <Text tag="span" variant="2">
-                Sort by : <span className="bold">{sortBy}</span>
-              </Text>
-            </Dropdown>
+            {sortBy && (
+              <Dropdown
+                items={arrSortBy.map((sortBy) => ({
+                  value: sortBy,
+                }))}
+                selected={sortBy}
+                onSelect={(sortBy) => handleSortBy(sortBy as SortByType)}
+                classNameWrapper={styles['content__header-dropdown']}
+                aria-label="sort by"
+              >
+                <Text tag="span" variant="2">
+                  Sort by : <span className="bold">{sortBy}</span>
+                </Text>
+              </Dropdown>
+            )}
             <Link
               to="/new"
               className={`${buttonStyles.button} ${buttonStyles['button--1']} ${styles['content__header-add-feedback']}`}

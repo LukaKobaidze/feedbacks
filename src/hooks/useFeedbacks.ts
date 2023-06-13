@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { currentUserData, feedbacksData as feedbacksDataInitial } from 'data';
 import { CategoryType, FeedbackType, FeedbacksDataType, SortByType } from 'types';
+import { currentUserData, feedbacksData as feedbacksDataInitial } from 'data';
 import {
   findFeedbackByIdAndReplace,
   getCommentId,
@@ -26,7 +26,7 @@ export default function useFeedbacks() {
     setFeedbacks((state) => {
       const id = getFeedbackId();
 
-      navigate('/' + id);
+      navigate('/' + id, { replace: true });
 
       return {
         ...state,
@@ -75,6 +75,7 @@ export default function useFeedbacks() {
         }
       }
 
+      navigate(-1);
       return output;
     });
   };
@@ -105,6 +106,7 @@ export default function useFeedbacks() {
             ...feedbacks.slice(0, indexFound),
             ...feedbacks.slice(indexFound + 1),
           ];
+          navigate(key === 'Suggestion' ? '/' : '/roadmap');
           break;
         }
       }

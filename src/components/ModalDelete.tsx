@@ -1,8 +1,5 @@
-import Button from './Button';
-import Heading from './Heading';
-import Modal from './Modal';
+import { Button, Heading, Modal, Text } from 'components';
 import styles from 'styles/ModalDelete.module.scss';
-import Text from './Text';
 
 interface Props {
   heading: string;

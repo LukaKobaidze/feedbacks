@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
-import { FeedbacksDataType } from 'types';
-import buttonStyles from 'styles/Button.module.scss';
-import { Feedback, GoBack, Heading, Text } from 'components';
 import { Link, useNavigate } from 'react-router-dom';
+import { FeedbacksDataType } from 'types';
+import { Feedback, GoBack, Heading, Text } from 'components';
+import buttonStyles from 'styles/Button.module.scss';
 import styles from 'styles/Roadmap.module.scss';
 
 const renderStatus: {
@@ -17,12 +17,12 @@ const renderStatus: {
 
 interface Props {
   data: FeedbacksDataType;
-  upvoted: number[];
+  upvoted?: number[];
   onFeedbackUpvote: (id: number) => void;
 }
 
 export default function Roadmap(props: Props) {
-  const { data, upvoted, onFeedbackUpvote } = props;
+  const { data, upvoted = [], onFeedbackUpvote } = props;
 
   const navigate = useNavigate();
 
@@ -30,7 +30,7 @@ export default function Roadmap(props: Props) {
 
   useEffect(() => {
     if (statusKeys.every((status) => data[status].length === 0)) {
-      navigate('/');
+      navigate('/', { replace: true });
     }
 
     document.title = 'Roadmap | Product Feedback';
@@ -42,7 +42,7 @@ export default function Roadmap(props: Props) {
     <div className={styles.container}>
       <header className={styles.header}>
         <div className={styles['heading-wrapper']}>
-          <GoBack to="/" className={styles['go-back']} />
+          <GoBack className={styles['go-back']} />
           <Heading level="1">Roadmap</Heading>
         </div>
         <Link

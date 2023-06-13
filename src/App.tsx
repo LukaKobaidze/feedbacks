@@ -45,8 +45,7 @@ export default function App() {
           />
         }
       />
-      \
-      <Route path="/new" element={<FeedbackNew onFeedbackAdd={onFeedbackAdd} />} />
+      <Route path="/new" element={<FeedbackNew onSubmit={onFeedbackAdd} />} />
       <Route
         path="/:feedbackId/edit"
         element={

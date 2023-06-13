@@ -1,17 +1,25 @@
 import { useMemo, useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { CategoryType, FeedbackType, FeedbacksDataType } from 'types';
 import { IconEditFeedback } from 'assets/shared';
+import { CategoryType, FeedbackType, FeedbacksDataType } from 'types';
 import { categories } from 'data';
-import { Button, Dropdown, Feedback, GoBack, Heading } from 'components';
-import Field from 'components/Field';
-import ModalDelete from 'components/ModalDelete';
-import styles from 'styles/FeedbackEdit.module.scss';
 import { findFeedbackById } from 'helpers';
+import {
+  Button,
+  Dropdown,
+  Feedback,
+  GoBack,
+  Heading,
+  Field,
+  ModalDelete,
+} from 'components';
+import styles from 'styles/FeedbackEdit.module.scss';
+
+type InputType = { value: string; error?: string };
 
 interface Props {
   data: FeedbacksDataType;
-  upvoted: number[];
+  upvoted?: number[];
   onDelete: (id: number) => void;
   onSaveChanges: (
     edited: Omit<FeedbackType, 'comments' | 'upvotes'>,
@@ -20,7 +28,7 @@ interface Props {
 }
 
 export default function FeedbackEdit(props: Props) {
-  const { data, upvoted, onDelete, onSaveChanges } = props;
+  const { data, upvoted = [], onDelete, onSaveChanges } = props;
 
   const { feedbackId } = useParams();
   const navigate = useNavigate();
@@ -28,44 +36,64 @@ export default function FeedbackEdit(props: Props) {
     return findFeedbackById(Number(feedbackId), data);
   }, [feedbackId, data]);
 
-  const [titleEdited, setTitleEdited] = useState(feedbackData?.title || '');
+  const [titleEdited, setTitleEdited] = useState<InputType>({
+    value: feedbackData?.title || '',
+  });
   const [categoryEdited, setCategoryEdited] = useState<CategoryType>(
     feedbackData?.category || 'UI'
   );
   const [statusEdited, setStatusEdited] = useState(
     feedbackData?.status || 'Suggestion'
   );
-  const [descriptionEdited, setDescriptionEdited] = useState(
-    feedbackData?.description || ''
-  );
+  const [descriptionEdited, setDescriptionEdited] = useState<InputType>({
+    value: feedbackData?.description || '',
+  });
   const [isDeleting, setIsDeleting] = useState(false);
 
   useEffect(() => {
     document.title = `Editing '${feedbackData?.title || ''}' | Product Feedback`;
   }, [feedbackData?.title]);
 
+  const isValid = (): boolean => {
+    const inputs: [InputType, React.Dispatch<React.SetStateAction<InputType>>][] = [
+      [titleEdited, setTitleEdited],
+      [descriptionEdited, setDescriptionEdited],
+    ];
+
+    let output = true;
+
+    inputs.forEach(([input, setInput]) => {
+      if (input.value.trim().length === 0) {
+        output = false;
+        setInput((state) => ({ value: state.value, error: "Can't be empty" }));
+      }
+    });
+
+    return output;
+  };
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     if (!feedbackData) return;
 
     e.preventDefault();
 
-    onSaveChanges(
-      {
-        id: feedbackData.id,
-        title: titleEdited,
-        category: categoryEdited,
-        description: descriptionEdited,
-      },
-      feedbackData.status !== statusEdited ? statusEdited : undefined
-    );
-
-    navigate('/' + feedbackId);
+    if (isValid()) {
+      onSaveChanges(
+        {
+          id: feedbackData.id,
+          title: titleEdited.value,
+          category: categoryEdited,
+          description: descriptionEdited.value,
+        },
+        feedbackData.status !== statusEdited ? statusEdited : undefined
+      );
+    }
   };
 
   return (
     <div className={styles.container}>
       <header className={styles.header}>
-        <GoBack to={'/' + feedbackId} />
+        <GoBack />
       </header>
       <main className={`element-rounded ${styles.main}`}>
         <IconEditFeedback className={styles.icon} />
@@ -85,8 +113,9 @@ export default function FeedbackEdit(props: Props) {
             <Field
               type="text"
               id="title"
-              value={titleEdited}
-              onChange={(e) => setTitleEdited(e.target.value)}
+              value={titleEdited.value}
+              error={titleEdited.error}
+              onChange={(e) => setTitleEdited({ value: e.target.value })}
               className={styles.field}
               autoFocus
             />
@@ -137,8 +166,9 @@ export default function FeedbackEdit(props: Props) {
               type="textarea"
               id="description"
               className={`${styles.field} ${styles['description-textarea']}`}
-              value={descriptionEdited}
-              onChange={(e) => setDescriptionEdited(e.target.value)}
+              value={descriptionEdited.value}
+              error={descriptionEdited.error}
+              onChange={(e) => setDescriptionEdited({ value: e.target.value })}
             />
 
             <div className={styles.buttons}>
@@ -175,7 +205,7 @@ export default function FeedbackEdit(props: Props) {
                 onCloseModal={() => setIsDeleting(false)}
                 onDelete={() => {
                   onDelete(Number(feedbackId));
-                  navigate(feedbackData.status === 'Suggestion' ? '/' : '/roadmap');
+                  setIsDeleting(false);
                 }}
               />
             )}
