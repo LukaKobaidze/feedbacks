@@ -17,8 +17,12 @@ describe('<Home /> page', () => {
 
   const onFeedbackUpvote = jest.fn();
 
+  let rerender: (
+    ui: React.ReactElement<any, string | React.JSXElementConstructor<any>>
+  ) => void;
+
   it('Should render page', () => {
-    render(
+    rerender = render(
       <Router location={history.location} navigator={history}>
         <Routes>
           <Route
@@ -38,7 +42,7 @@ describe('<Home /> page', () => {
           />
         </Routes>
       </Router>
-    );
+    ).rerender;
 
     expect(screen.getByLabelText('header')).toBeInTheDocument();
     expect(screen.getByLabelText('main')).toBeInTheDocument();
@@ -69,5 +73,31 @@ describe('<Home /> page', () => {
     const roadmap = within(screen.getByLabelText('roadmap'));
 
     expect(roadmap.getByText('View')).toHaveAttribute('aria-disabled', 'true');
+  });
+
+  it('Should display empty message, if no suggestions', () => {
+    rerender(
+      <Router location={history.location} navigator={history}>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <Home
+                feedbacksData={{
+                  Suggestion: [],
+                  Planned: [],
+                  'In-Progress': [],
+                  Live: [],
+                }}
+                sortBy="Most Upvotes"
+                onFeedbackUpvote={onFeedbackUpvote}
+              />
+            }
+          />
+        </Routes>
+      </Router>
+    );
+
+    expect(screen.getByText(/there is no feedback yet/i)).toBeInTheDocument();
   });
 });
