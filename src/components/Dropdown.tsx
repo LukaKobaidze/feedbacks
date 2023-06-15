@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
-import { IconArrowDown, IconArrowUp, IconCheck } from 'assets/shared';
+import { IconArrowUp, IconCheck } from 'assets/shared';
 import { AlertOutsideClick } from 'components';
 import styles from 'styles/Dropdown.module.scss';
 
@@ -160,7 +160,9 @@ export default function Dropdown(props: Props) {
     >
       <button
         ref={mainButtonRef}
-        className={`${styles['main-button']} ${styles[`main-button--${variant}`]} ${classNameBtn}`}
+        className={`${styles['main-button']} ${
+          styles[`main-button--${variant}`]
+        } ${classNameBtn}`}
         onClick={(e) => {
           updateShowState((state) => !state);
           onClick && onClick(e);
