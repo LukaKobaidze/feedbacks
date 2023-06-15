@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { CategoryType, FeedbackType, FeedbacksDataType, SortByType } from 'types';
 import { currentUserData, feedbacksData as feedbacksDataInitial } from 'data';
@@ -8,13 +8,17 @@ import {
   getFeedbackId,
   getTotalComments,
 } from 'helpers';
+import useLocalStorageState from './useLocalStorageState';
 
 export default function useFeedbacks() {
   const [searchParams] = useSearchParams();
 
   const navigate = useNavigate();
-  const [feedbacks, setFeedbacks] = useState(feedbacksDataInitial);
-  const [upvoted, setUpvoted] = useState<number[]>([]);
+  const [feedbacks, setFeedbacks] = useLocalStorageState(
+    'feedbacks',
+    feedbacksDataInitial
+  );
+  const [upvoted, setUpvoted] = useLocalStorageState<number[]>('upvoted', []);
   const sortBy: SortByType = (searchParams.get('sortBy') ||
     'Most Upvotes') as SortByType;
 
@@ -251,7 +255,7 @@ export default function useFeedbacks() {
     }));
 
     window.scrollTo(0, 0);
-  }, [sortBy]);
+  }, [sortBy, setFeedbacks]);
 
   return {
     feedbacks,
