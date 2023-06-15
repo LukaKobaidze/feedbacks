@@ -203,7 +203,6 @@ export default function useFeedbacks() {
     commentId: number,
     replyIndex?: number
   ) => {
-    console.log('ondelete');
     setFeedbacks((state) => {
       return findFeedbackByIdAndReplace(feedbackId, state, (feedback) => {
         let updatedComments = feedback.comments || [];

@@ -20,7 +20,11 @@ describe('<Roadmap /> page', () => {
           <Route
             path="/roadmap"
             element={
-              <Roadmap data={feedbacksData} onFeedbackUpvote={onFeedbackUpvote} />
+              <Roadmap
+                data={feedbacksData}
+                onFeedbackUpvote={onFeedbackUpvote}
+                windowWidth={1440}
+              />
             }
           />
         </Routes>

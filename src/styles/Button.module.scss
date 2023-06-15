@@ -3,12 +3,17 @@
   background: none;
   border: none;
   font-family: inherit;
-  font-size: 14px;
+  font-size: 0.875rem;
   font-weight: 700;
   color: var(--clr-4);
   cursor: pointer;
   border-radius: 10px;
-  padding: 0.858em 1.765em;
+  padding: 0.858em 1.7143em;
+
+  @media (max-width: 550px) {
+    font-size: 0.8125rem;
+    padding: 0.8077em 1.2308em;
+  }
 
   &:disabled {
     cursor: default;
@@ -17,27 +22,42 @@
   &--1 {
     background-color: var(--clr-1);
 
-    &:not(:disabled):hover,
     &:focus-visible {
       background-color: var(--clr-1--lighter);
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+      &:not(:disabled):hover {
+        background-color: var(--clr-1--lighter);
+      }
     }
   }
 
   &--2 {
     background-color: var(--clr-2);
 
-    &:not(:disabled):hover,
     &:focus-visible {
       background-color: var(--clr-2--lighter);
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+      &:not(:disabled):hover {
+        background-color: var(--clr-2--lighter);
+      }
     }
   }
 
   &--3 {
     background-color: var(--clr-7);
 
-    &:not(:disabled):hover,
     &:focus-visible {
       background-color: var(--clr-7--lighter);
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+      &:not(:disabled):hover {
+        background-color: var(--clr-7--lighter);
+      }
     }
   }
 
@@ -48,15 +68,28 @@
     &:focus-visible {
       background-color: var(--clr-btn-4-hover);
     }
+
+    @media (hover: hover) and (pointer: fine) {
+      &:not(:disabled):hover {
+        background-color: var(--clr-btn-4-hover);
+      }
+    }
   }
 
   &--5 {
+    font-size: 0.8125rem;
+    padding: 0.3846em 1.2308em 0.4615em 1.2308em;
     background-color: var(--clr-5);
     color: var(--clr-2);
 
-    &:not(:disabled):hover,
     &:focus-visible {
       background-color: #cfd7ff;
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+      &:not(:disabled):hover {
+        background-color: #cfd7ff;
+      }
     }
 
     &.active {

@@ -50,57 +50,57 @@ export default function Comment(props: Props) {
   return (
     <div className={`${styles.comment} ${className}`} aria-label="comment">
       <div
-        className={styles['image-wrapper']}
-        style={imageGap ? { marginRight: imageGap } : undefined}
+        className={styles.top}
+        style={textContentGap ? { marginBottom: textContentGap } : undefined}
       >
-        <img
-          src={require(`../${user.image}`)}
-          alt={user.username}
-          className={styles.image}
-        />
-      </div>
-
-      <div className={styles.content}>
         <div
-          className={styles['name-and-controls']}
-          style={textContentGap ? { marginBottom: textContentGap } : undefined}
+          className={styles['image-wrapper']}
+          style={imageGap ? { marginRight: imageGap } : undefined}
         >
-          <div className={styles.text}>
-            <Heading level="3" styleLevel="4">
-              {user.name}
-            </Heading>
-            <p className={styles.username}>@{user.username}</p>
-          </div>
-          <div>
-            {onEdit && (
-              <button
-                className={`${styles['control-btn']} ${styles['control-btn--edit']}`}
-                onClick={() => handleToggleAction('edit')}
-              >
-                {action === 'edit' ? 'Cancel' : 'Edit'}
-              </button>
-            )}
-
-            {onDelete && (
-              <button
-                className={`${styles['control-btn']} ${styles['control-btn--delete']}`}
-                onClick={() => handleToggleAction('delete')}
-              >
-                Delete
-              </button>
-            )}
-
-            {onReply && (
-              <button
-                className={`${styles['control-btn']} ${styles['control-btn--reply']}`}
-                onClick={() => handleToggleAction('reply')}
-              >
-                {action === 'reply' ? 'Cancel' : 'Reply'}
-              </button>
-            )}
-          </div>
+          <img
+            src={require(`../${user.image}`)}
+            alt={user.username}
+            className={styles.image}
+          />
         </div>
 
+        <div>
+          <Heading level="3" styleLevel="4">
+            {user.name}
+          </Heading>
+          <p className={styles.username}>@{user.username}</p>
+        </div>
+        <div className={styles.controls}>
+          {onEdit && (
+            <button
+              className={`${styles['controls-btn']} ${styles['controls-btn--edit']}`}
+              onClick={() => handleToggleAction('edit')}
+            >
+              {action === 'edit' ? 'Cancel' : 'Edit'}
+            </button>
+          )}
+
+          {onDelete && (
+            <button
+              className={`${styles['controls-btn']} ${styles['controls-btn--delete']}`}
+              onClick={() => handleToggleAction('delete')}
+            >
+              Delete
+            </button>
+          )}
+
+          {onReply && (
+            <button
+              className={`${styles['controls-btn']} ${styles['controls-btn--reply']}`}
+              onClick={() => handleToggleAction('reply')}
+            >
+              {action === 'reply' ? 'Cancel' : 'Reply'}
+            </button>
+          )}
+        </div>
+      </div>
+
+      <div className={styles.text}>
         {action === 'edit' ? (
           <AddComment
             contentInitial={content}
@@ -115,7 +115,7 @@ export default function Comment(props: Props) {
           />
         ) : (
           <div ref={commentTextRef}>
-            <Text tag="p" variant="2" className={styles['text-content']}>
+            <Text tag="p" variant="2" className={styles['text__paragraph']}>
               {replyingTo && (
                 <span className={styles['replying-to']}>@{replyingTo} </span>
               )}
@@ -123,41 +123,41 @@ export default function Comment(props: Props) {
             </Text>
           </div>
         )}
-
-        {action === 'reply' && (
-          <AddComment
-            replyingTo={user.username}
-            onSubmit={(content) => {
-              onReply && onReply(content);
-              setAction(null);
-            }}
-            className={styles.reply}
-            initialFocus
-          />
-        )}
-
-        {action === 'delete' && (
-          <ModalDelete
-            heading={`Delete ${replyingTo ? 'Reply' : 'Comment'}`}
-            paragraph={`Are you sure you want to delete this ${
-              replyingTo ? ' reply' : ' comment'
-            }?`}
-            onCloseModal={() => setAction(null)}
-            onDelete={() => onDelete && onDelete()}
-            elementDeleting={
-              <div className={styles['modal-delete-element']}>
-                <Comment
-                  user={user}
-                  content={content}
-                  replyingTo={replyingTo}
-                  imageGap={20}
-                  textContentGap={7}
-                />
-              </div>
-            }
-          />
-        )}
       </div>
+
+      {action === 'reply' && (
+        <AddComment
+          replyingTo={user.username}
+          onSubmit={(content) => {
+            onReply && onReply(content);
+            setAction(null);
+          }}
+          className={styles.reply}
+          initialFocus
+        />
+      )}
+
+      {action === 'delete' && (
+        <ModalDelete
+          heading={`Delete ${replyingTo ? 'Reply' : 'Comment'}`}
+          paragraph={`Are you sure you want to delete this ${
+            replyingTo ? ' reply' : ' comment'
+          }?`}
+          onCloseModal={() => setAction(null)}
+          onDelete={() => onDelete && onDelete()}
+          elementDeleting={
+            <div className={styles['modal-delete-element']}>
+              <Comment
+                user={user}
+                content={content}
+                replyingTo={replyingTo}
+                imageGap={20}
+                textContentGap={7}
+              />
+            </div>
+          }
+        />
+      )}
     </div>
   );
 }

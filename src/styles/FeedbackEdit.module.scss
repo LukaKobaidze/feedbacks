@@ -4,14 +4,31 @@
 }
 
 .header {
-  margin-top: 76px;
+  margin-top: 64px;
+
+  @media (max-width: 900px) {
+    margin-top: 56px;
+  }
+
+  @media (max-width: 650px) {
+    margin-top: 22px;
+  }
 }
 
 .main {
   position: relative;
-  margin-top: 68px;
+  margin-top: 56px;
   padding: 52px 42px 40px 42px;
   margin-bottom: 129px;
+
+  @media (max-width: 650px) {
+    margin-top: 43px;
+    margin-bottom: 77px;
+  }
+
+  @media (max-width: 550px) {
+    padding: 44px 24px 24px 24px;
+  }
 }
 
 .icon {
@@ -19,10 +36,19 @@
   top: 0;
   left: 42px;
   transform: translateY(-50%) scale(1.4);
+
+  @media (max-width: 550px) {
+    transform: translateY(-50%);
+    left: 24px;
+  }
 }
 
 .heading {
   margin-bottom: 75px;
+
+  @media (max-width: 550px) {
+    margin-bottom: 24px;
+  }
 }
 
 .field-title {
@@ -47,13 +73,30 @@
 
 .buttons {
   display: flex;
+  flex-direction: row-reverse;
   margin-top: 32px;
+
+  & > button:not(:last-child) {
+    margin-left: 16px;
+
+    @media (max-width: 450px) {
+      margin-left: 0;
+      margin-bottom: 16px;
+    }
+  }
+
+  @media (max-width: 450px) {
+    flex-direction: column;
+  }
 }
 
 .btn-delete {
   margin-right: auto;
+
+  @media (max-width: 450px) {
+    margin-right: 0;
+  }
 }
 
 .btn-cancel {
-  margin-right: 16px;
 }

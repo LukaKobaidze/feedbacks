@@ -12,6 +12,7 @@ import {
   Heading,
   Field,
   ModalDelete,
+  PageContainer,
 } from 'components';
 import styles from 'styles/FeedbackEdit.module.scss';
 
@@ -91,7 +92,7 @@ export default function FeedbackEdit(props: Props) {
   };
 
   return (
-    <div className={styles.container}>
+    <PageContainer className={styles.container}>
       <header className={styles.header}>
         <GoBack />
       </header>
@@ -117,7 +118,6 @@ export default function FeedbackEdit(props: Props) {
               error={titleEdited.error}
               onChange={(e) => setTitleEdited({ value: e.target.value })}
               className={styles.field}
-              autoFocus
             />
 
             <Heading level="2" styleLevel="4" className={styles['field-title']}>
@@ -172,13 +172,8 @@ export default function FeedbackEdit(props: Props) {
             />
 
             <div className={styles.buttons}>
-              <Button
-                variant="4"
-                onClick={() => setIsDeleting(true)}
-                type="button"
-                className={styles['btn-delete']}
-              >
-                Delete
+              <Button variant="1" type="submit">
+                Save Changes
               </Button>
               <Button
                 variant="3"
@@ -187,8 +182,13 @@ export default function FeedbackEdit(props: Props) {
               >
                 Cancel
               </Button>
-              <Button variant="1" type="submit">
-                Save Changes
+              <Button
+                variant="4"
+                onClick={() => setIsDeleting(true)}
+                type="button"
+                className={styles['btn-delete']}
+              >
+                Delete
               </Button>
             </div>
 
@@ -212,6 +212,6 @@ export default function FeedbackEdit(props: Props) {
           </form>
         )}
       </main>
-    </div>
+    </PageContainer>
   );
 }

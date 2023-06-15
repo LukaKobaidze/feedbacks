@@ -1,0 +1,9 @@
+.container {
+  margin-left: auto;
+  margin-right: auto;
+  width: 89.715%;
+
+  @media (max-width: 550px) {
+    width: 87.203% !important;
+  }
+}

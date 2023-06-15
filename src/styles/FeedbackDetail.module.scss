@@ -2,7 +2,18 @@
   max-width: 730px;
   margin: 0 auto;
   padding-top: 80px;
+  padding-bottom: 129px;
   width: 89.715%;
+
+  @media (max-width: 850px) {
+    padding-top: 56px;
+    padding-bottom: 120px;
+  }
+
+  @media (max-width: 550px) {
+    padding-top: 24px;
+    padding-bottom: 88px;
+  }
 }
 
 .header {
@@ -20,6 +31,10 @@
 .comments {
   margin-top: 24px;
   padding: 24px 32px 40px 32px;
+
+  @media (max-width: 550px) {
+    padding: 24px;
+  }
 
   &__heading {
     margin-bottom: 28px;
@@ -44,6 +59,11 @@
   list-style: none;
   padding-left: 45px;
 
+  @media (max-width: 550px) {
+    position: relative;
+    padding-left: 24px;
+  }
+
   &::before {
     content: '';
     position: absolute;
@@ -53,6 +73,12 @@
     width: 1px;
     background-color: var(--clr-8);
     opacity: 0.1;
+
+    @media (max-width: 550px) {
+      left: 0;
+      top: 0;
+      bottom: 50px;
+    }
   }
 }
 
@@ -63,6 +89,10 @@
 .add-comment {
   margin-top: 24px;
   padding: 24px 32px 32px 34px;
+
+  @media (max-width: 550px) {
+    padding: 24px;
+  }
 
   &__heading {
     margin-bottom: 24px;

@@ -1,6 +1,15 @@
 .container {
   max-width: 1110px;
   margin: 78px auto 179px auto;
+
+  @media (max-width: 1000px) {
+    margin-top: 56px;
+  }
+
+  @media (max-width: 700px) {
+    margin-top: 160px;
+    margin-bottom: 98px;
+  }
 }
 
 .header {
@@ -16,6 +25,16 @@
   padding-left: 32px;
   padding-right: 40px;
   height: 113px;
+
+  @media (max-width: 700px) {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    border-radius: 0;
+    height: 100px;
+    padding: 26px 24px;
+  }
 }
 
 .go-back {
@@ -34,6 +53,10 @@
 
 .main {
   margin-top: 48px;
+
+  @media (max-width: 1000px) {
+    margin-top: 32px;
+  }
 }
 
 .status-list {
@@ -46,19 +69,111 @@
 
   &:not(:last-child) {
     margin-right: 30px;
+
+    @media (max-width: 1000px) {
+      margin-right: 10px;
+    }
+  }
+
+  &__title {
+    @media (max-width: 800px) and (min-width: 701px) {
+      font-size: 0.875rem;
+    }
   }
 
   &__subtitle {
     color: var(--clr-8);
     margin-top: 4px;
     margin-bottom: 32px;
+
+    @media (max-width: 800px) {
+      font-size: 0.875rem;
+      margin-bottom: 24px;
+    }
+
+    @media (max-width: 700px) {
+      font-size: 0.8125rem;
+    }
+  }
+
+  &__list {
+    list-style: none;
+  }
+
+  &__item {
+    margin-bottom: 24px;
+
+    @media (max-width: 800px) {
+      margin-bottom: 16px;
+    }
   }
 }
 
-.feedback-list {
-  list-style: none;
+.status-buttons-wrapper {
+  position: fixed;
+  top: 100px;
+  left: 0;
+  width: 100%;
+  z-index: 2;
+  background-color: var(--clr-6);
+  border-bottom: 1px solid #8c92b340;
 }
 
-.feedback-item {
-  margin-bottom: 24px;
+.status-buttons {
+  --buttons-count: 1; // provided by 'style' prop
+  --button-active: 0; // provided by 'style' prop
+  position: relative;
+  margin: 0 auto;
+  width: 375px;
+  max-width: 100%;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+
+  &__btn {
+    font-family: inherit;
+    border: none;
+    background: none;
+    color: var(--clr-7);
+    width: 100%;
+    font-weight: 700;
+    font-size: 13px;
+    opacity: 0.4;
+    cursor: pointer;
+    transition: opacity 150ms;
+
+    &:focus-visible {
+      opacity: 0.75;
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+      &:hover {
+        opacity: 0.75;
+      }
+    }
+
+    &.active {
+      opacity: 1;
+    }
+  }
+
+  &::before {
+    content: '';
+    height: 4px;
+    width: calc(100% / var(--buttons-count));
+    background-color: var(--clr-1);
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    transform: translateX(calc(100% * var(--button-active)));
+    transition: transform 150ms;
+    pointer-events: none;
+  }
+}
+
+.status {
+  padding-top: 24px;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 425px;
 }

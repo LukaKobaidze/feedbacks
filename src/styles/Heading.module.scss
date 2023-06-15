@@ -2,23 +2,32 @@
   font-weight: 700;
 
   &--1 {
-    font-size: 1.5em;
-    line-height: 1.45em;
+    font-size: 1.5rem;
+    line-height: 1.458333333em;
     letter-spacing: -0.33px;
+
+    @media (max-width: 550px) {
+      font-size: 1.125rem;
+    }
   }
   &--2 {
-    font-size: 1.25em;
+    font-size: 1.25rem;
     line-height: 1.45em;
     letter-spacing: -0.25px;
+
+    @media (max-width: 720px) {
+      font-size: 0.9375rem;
+      line-height: 1.45em;
+    }
   }
   &--3 {
-    font-size: 1.125em;
-    line-height: 1.45em;
+    font-size: 1.125rem;
+    line-height: 1.4444444em;
     letter-spacing: -0.25px;
   }
   &--4 {
-    font-size: 0.875em;
-    line-height: 1.143em;
+    font-size: 0.875rem;
+    line-height: 1.428571428571429em;
     letter-spacing: -0.2px;
   }
 }

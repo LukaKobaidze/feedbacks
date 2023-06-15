@@ -10,4 +10,5 @@ export { default as Heading } from './Heading';
 export { default as ImageResponsive } from './ImageResponsive';
 export { default as Modal } from './Modal';
 export { default as ModalDelete } from './ModalDelete';
+export { default as PageContainer } from './PageContainer';
 export { default as Text } from './Text';

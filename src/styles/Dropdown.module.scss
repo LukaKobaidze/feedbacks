@@ -17,7 +17,6 @@
 
 .main-button {
   font-family: inherit;
-  font-size: 14px;
   font-weight: 400;
   position: relative;
   padding: 10px 33.5px 10px 17.5px;
@@ -46,6 +45,10 @@
 
     .main-button__icon {
       color: var(--clr-2);
+    }
+
+    & + .dropdown {
+      min-width: initial;
     }
   }
 }
@@ -94,9 +97,14 @@
       font-weight: 500;
       line-height: 23px;
 
-      &:hover,
       &:focus-visible {
         color: var(--clr-1);
+      }
+
+      @media (hover: hover) and (pointer: fine) {
+        &:hover {
+          color: var(--clr-1);
+        }
       }
     }
 

@@ -9,6 +9,7 @@ type Props = {
   selected?: string;
   onSelect: (value: string) => void;
   classNameWrapper?: string;
+  classNameBtn?: string;
 } & (
   | { show?: undefined }
   | { show: boolean; setShow: React.Dispatch<React.SetStateAction<boolean>> }
@@ -25,8 +26,9 @@ export default function Dropdown(props: Props) {
     selected,
     onSelect,
     show,
-    classNameWrapper,
     className,
+    classNameWrapper,
+    classNameBtn,
     children,
     onClick,
     ...restProps
@@ -158,7 +160,7 @@ export default function Dropdown(props: Props) {
     >
       <button
         ref={mainButtonRef}
-        className={`${styles['main-button']} ${styles[`main-button--${variant}`]}`}
+        className={`${styles['main-button']} ${styles[`main-button--${variant}`]} ${classNameBtn}`}
         onClick={(e) => {
           updateShowState((state) => !state);
           onClick && onClick(e);

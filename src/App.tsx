@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import { Home, FeedbackDetail, FeedbackEdit, FeedbackNew, Roadmap } from 'pages';
-import { useFeedbacks } from 'hooks';
+import { useFeedbacks, useWindowDimensions } from 'hooks';
 
 export default function App() {
   const { pathname } = useLocation();
@@ -17,6 +17,7 @@ export default function App() {
     onCommentEdit,
     onCommentDelete,
   } = useFeedbacks();
+  const [windowWidth] = useWindowDimensions();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -32,6 +33,7 @@ export default function App() {
             sortBy={sortBy}
             upvoted={upvoted}
             onFeedbackUpvote={onFeedbackUpvote}
+            windowWidth={windowWidth}
           />
         }
       />
@@ -42,6 +44,7 @@ export default function App() {
             data={feedbacks}
             upvoted={upvoted}
             onFeedbackUpvote={onFeedbackUpvote}
+            windowWidth={windowWidth}
           />
         }
       />

@@ -2,12 +2,20 @@
 
 .icon-new {
   transform: translateY(-50%);
+
+  @media (max-width: 550px) {
+    transform: translateY(-50%) scale(0.7143);
+    left: 16px;
+  }
 }
 
 .heading {
   margin-bottom: 40px;
+
+  @media (max-width: 550px) {
+    margin-bottom: 24px;
+  }
 }
 
 .feedbacknew-buttons {
-  justify-content: flex-end;
 }

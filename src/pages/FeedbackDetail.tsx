@@ -3,7 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import { FeedbacksDataType } from 'types';
 import { currentUserData } from 'data';
 import { findFeedbackById, getTotalComments } from 'helpers';
-import { Feedback, GoBack, Heading, Comment, AddComment } from 'components';
+import { Feedback, GoBack, Heading, Comment, AddComment, PageContainer } from 'components';
 import buttonStyles from 'styles/Button.module.scss';
 import styles from 'styles/FeedbackDetail.module.scss';
 
@@ -46,7 +46,7 @@ export default function FeedbackDetail(props: Props) {
   }, [feedbackData?.title]);
 
   return (
-    <div className={styles.container}>
+    <PageContainer className={styles.container}>
       <header className={styles.header}>
         <GoBack />
         <Link
@@ -69,7 +69,7 @@ export default function FeedbackDetail(props: Props) {
 
             {commentsCount !== 0 && (
               <div className={`element-rounded ${styles.comments}`}>
-                <Heading level="2" className={styles['comments__heading']}>
+                <Heading level="2" styleLevel='3' className={styles['comments__heading']}>
                   {commentsCount} Comments
                 </Heading>
 
@@ -170,6 +170,6 @@ export default function FeedbackDetail(props: Props) {
           <div>404 Not Found.</div>
         )}
       </main>
-    </div>
+    </PageContainer>
   );
 }

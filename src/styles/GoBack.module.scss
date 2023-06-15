@@ -2,10 +2,15 @@
   display: flex;
   align-items: center;
   color: var(--clr-8);
-  height: 3.786em;
 
-  &:hover {
+  &:focus-visible {
     text-decoration: underline;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      text-decoration: underline;
+    }
   }
 
   & > svg {

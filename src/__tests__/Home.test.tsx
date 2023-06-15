@@ -8,6 +8,8 @@ import { SortByType } from 'types';
 import { feedbacksData } from 'data';
 import { Home } from 'pages';
 
+global.scrollTo = jest.fn();
+
 describe('<Home /> page', () => {
   afterAll(cleanup);
 
@@ -126,5 +128,4 @@ describe('<Home /> page', () => {
       screen.queryByText(`${feedbacksData.Suggestion.length} Suggestions`)
     ).not.toBeInTheDocument();
   });
-
 });

@@ -28,11 +28,6 @@
 
 html {
   overflow-y: scroll;
-
-  @supports (scrollbar-gutter: stable) {
-    scrollbar-gutter: stable;
-    overflow-y: auto;
-  }
 }
 
 body {

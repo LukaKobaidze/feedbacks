@@ -1,3 +1,4 @@
+export { ReactComponent as IconAdd } from './icon-add.svg';
 export { ReactComponent as IconArrowDown } from './icon-arrow-down.svg';
 export { ReactComponent as IconArrowLeft } from './icon-arrow-left.svg';
 export { ReactComponent as IconArrowUp } from './icon-arrow-up.svg';

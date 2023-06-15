@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { IconNewFeedback } from 'assets/shared';
 import { CategoryType } from 'types';
 import { categories } from 'data';
-import { Button, Dropdown, GoBack, Heading, Field } from 'components';
+import { Button, Dropdown, GoBack, Heading, Field, PageContainer } from 'components';
 import styles from 'styles/FeedbackNew.module.scss';
 
 type InputType = { value: string; error: string };
@@ -54,7 +54,7 @@ export default function FeedbackNew(props: Props) {
   };
 
   return (
-    <div className={styles.container}>
+    <PageContainer className={styles.container}>
       <header className={styles.header}>
         <GoBack />
       </header>
@@ -78,7 +78,6 @@ export default function FeedbackNew(props: Props) {
             error={title.error}
             onChange={(e) => setTitle({ value: e.target.value, error: '' })}
             className={styles.field}
-            autoFocus
             aria-label="title field"
           />
 
@@ -117,6 +116,10 @@ export default function FeedbackNew(props: Props) {
           />
 
           <div className={`${styles.buttons} ${styles['feedbacknew-buttons']}`}>
+            <Button variant="1" type="submit">
+              Add Feedback
+            </Button>
+            
             <Button
               variant="3"
               onClick={() => navigate('/')}
@@ -124,12 +127,9 @@ export default function FeedbackNew(props: Props) {
             >
               Cancel
             </Button>
-            <Button variant="1" type="submit">
-              Add Feedback
-            </Button>
           </div>
         </form>
       </main>
-    </div>
+    </PageContainer>
   );
 }

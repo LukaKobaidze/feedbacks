@@ -1,5 +1,15 @@
 .comment {
   display: flex;
+  flex-direction: column;
+}
+
+.top {
+  display: flex;
+  margin-bottom: 17px;
+
+  @media (max-width: 550px) {
+    margin-bottom: 16px;
+  }
 }
 
 .image-wrapper {
@@ -9,72 +19,85 @@
   height: 40px;
   border-radius: 50%;
   background-color: rgba(100, 113, 150, 0.5);
-}
 
+  @media (max-width: 550px) {
+    margin-right: 16px;
+  }
+}
 .image {
   width: 100%;
   height: 100%;
   object-fit: cover;
   border-radius: 50%;
 }
-
-.content {
-  width: 0;
-  flex-grow: 1;
-}
-
-.name-and-controls {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 17px;
-}
-
 .name {
   font-weight: 700;
   font-size: 14px;
 }
 
 .username {
-  font-size: 14px;
+  font-size: 0.875rem;
   font-weight: 400;
   line-height: 20.23px;
   color: var(--clr-8);
 }
 
-.control-btn {
-  font-family: inherit;
-  background: none;
-  border: none;
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-  height: 100%;
+.controls {
+  display: flex;
+  margin-left: auto;
 
-  &:not(:last-child) {
-    margin-right: 15px;
-  }
+  &-btn {
+    font-family: inherit;
+    background: none;
+    border: none;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    height: 100%;
 
-  &:hover,
-  &:focus-visible {
-    text-decoration: underline;
-  }
+    &:not(:last-child) {
+      margin-right: 15px;
 
-  &--reply {
-    color: var(--clr-2);
-  }
+      @media (max-width: 550px) {
+        margin-right: 7px;
+      }
+    }
 
-  &--edit {
-    color: var(--clr-1);
-  }
+    &:focus-visible {
+      text-decoration: underline;
+    }
 
-  &--delete {
-    color: var(--clr-11);
+    @media (hover: hover) and (pointer: fine) {
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    &--reply {
+      color: var(--clr-2);
+    }
+
+    &--edit {
+      color: var(--clr-1);
+    }
+
+    &--delete {
+      color: var(--clr-11);
+    }
   }
 }
 
-.text-content {
-  color: var(--clr-8);
-  word-wrap: break-word;
+.text {
+  padding-left: 72px;
+
+  @media (max-width: 550px) {
+    padding-left: 0;
+  }
+
+  &__paragraph {
+    color: var(--clr-8);
+    word-wrap: break-word;
+  }
 }
 
 .reply {
