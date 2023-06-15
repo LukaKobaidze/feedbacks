@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
-import { IconArrowDown, IconCheck } from 'assets/shared';
+import { IconArrowDown, IconArrowUp, IconCheck } from 'assets/shared';
 import { AlertOutsideClick } from 'components';
 import styles from 'styles/Dropdown.module.scss';
 
@@ -169,7 +169,7 @@ export default function Dropdown(props: Props) {
         {...restProps}
       >
         {children}
-        <IconArrowDown className={styles['main-button__icon']} />
+        <IconArrowUp className={styles['main-button__icon']} />
       </button>
 
       {(show || showDropdown) && (

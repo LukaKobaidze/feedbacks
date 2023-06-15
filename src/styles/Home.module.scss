@@ -220,6 +220,7 @@
     font-weight: 700;
     margin-left: auto;
     color: var(--clr-2);
+    font-size: 0.8125rem;
 
     &:focus-visible {
       color: #8397f8;
@@ -260,7 +261,7 @@
     top: 15px;
     z-index: 3;
     padding-left: 24px;
-    padding-right: 12px;
+    padding-right: 16px;
     height: 72px;
     width: 100%;
     display: flex;
