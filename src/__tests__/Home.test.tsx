@@ -37,6 +37,7 @@ describe('<Home /> page', () => {
                 }}
                 sortBy="Most Upvotes"
                 onFeedbackUpvote={onFeedbackUpvote}
+                windowWidth={1440}
               />
             }
           />
@@ -91,6 +92,7 @@ describe('<Home /> page', () => {
                 }}
                 sortBy="Most Upvotes"
                 onFeedbackUpvote={onFeedbackUpvote}
+                windowWidth={1440}
               />
             }
           />
@@ -100,4 +102,29 @@ describe('<Home /> page', () => {
 
     expect(screen.getByText(/there is no feedback yet/i)).toBeInTheDocument();
   });
+
+  it('Should hide suggestions count on mobile', () => {
+    rerender(
+      <Router location={history.location} navigator={history}>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <Home
+                feedbacksData={feedbacksData}
+                sortBy="Most Upvotes"
+                onFeedbackUpvote={onFeedbackUpvote}
+                windowWidth={375}
+              />
+            }
+          />
+        </Routes>
+      </Router>
+    );
+
+    expect(
+      screen.queryByText(`${feedbacksData.Suggestion.length} Suggestions`)
+    ).not.toBeInTheDocument();
+  });
+
 });
