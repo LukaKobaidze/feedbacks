@@ -202,7 +202,7 @@ export default function Home(props: Props) {
               aria-label="roadmap"
             >
               <div className={styles['roadmap__heading-wrapper']}>
-                <Heading level="3" className={styles['roadmap__heading']}>
+                <Heading level="2" className={styles['roadmap__heading']}>
                   Roadmap
                 </Heading>
                 <Link
