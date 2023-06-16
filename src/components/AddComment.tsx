@@ -30,9 +30,11 @@ export default function AddComment(props: Props) {
   const charsLeft = MAX_CHARS - content.length;
 
   useEffect(() => {
-    const element = fieldRef.current;
-    if (!element) return;
-    element.setSelectionRange(element.value.length, element.value.length);
+    if (initialFocus) {
+      const element = fieldRef.current;
+      if (!element) return;
+      element.setSelectionRange(element.value.length, element.value.length);
+    }
   }, [initialFocus]);
 
   const handleFieldChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -67,7 +69,7 @@ export default function AddComment(props: Props) {
         placeholder={
           replyingTo ? `Reply to @${replyingTo}` : 'Type your comment here'
         }
-        autoFocus={initialFocus}
+        autoFocus={false}
         fieldRef={fieldRef}
         style={fieldStyle}
       />
