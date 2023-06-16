@@ -69,7 +69,7 @@ export default function AddComment(props: Props) {
         placeholder={
           replyingTo ? `Reply to @${replyingTo}` : 'Type your comment here'
         }
-        autoFocus={false}
+        autoFocus={initialFocus}
         fieldRef={fieldRef}
         style={fieldStyle}
       />
